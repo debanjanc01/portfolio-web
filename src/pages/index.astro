@@ -19,10 +19,10 @@ observability: prometheus, grafana, datadog, opentelemetry
 <span class="prompt">$</span> contact --email
 debanjanc01@gmail.com  <button id="copy-email" class="btn">copy</button>
 
-<span class="prompt">$</span> open --notes    /notes
-<span class="prompt">$</span> open --blog     /blog
-<span class="prompt">$</span> open --about    /about
-<span class="prompt">$</span> open --timeline /timeline
+<span class="prompt">$</span> open --notes    ./notes
+<span class="prompt">$</span> open --blog     ./blog
+<span class="prompt">$</span> open --about    ./about
+<span class="prompt">$</span> open --timeline ./timeline
 
 # tips: g a → About, g c → Contact, g t → Timeline
 </pre>
@@ -39,19 +39,19 @@ debanjanc01@gmail.com  <button id="copy-email" class="btn">copy</button>
         if (k === 'g') { (window as any)._g = true; return; }
         if ((window as any)._g) {
           (window as any)._g = false;
-          if (k === 'a') location.href = '/about';
-          
-          if (k === 'c') location.href = '/contact';
-          
-          if (k === 't') location.href = '/timeline';
+                  if (k === 'a') location.href = './about';
+        
+        if (k === 'c') location.href = './contact';
+        
+        if (k === 't') location.href = './timeline';
         }
       });
     </script>
 
     <div class="links">
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
-      <a href="/timeline">Timeline</a>
+      <a href="./about">About</a>
+      <a href="./contact">Contact</a>
+      <a href="./timeline">Timeline</a>
     </div>
   </section>
 </BaseLayout>
