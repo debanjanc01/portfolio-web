@@ -31,9 +31,10 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          cp -r dist/* /tmp/deploy/
           git checkout --orphan gh-pages
           git rm -rf .
-          cp -r dist/* .
+          cp -r /tmp/deploy/* .
           git add .
           git commit -m "Deploy to GitHub Pages"
           git push -f origin gh-pages
