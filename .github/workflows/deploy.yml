@@ -22,7 +22,7 @@ jobs:
           cache: 'npm'
           
       - name: Install dependencies
-        run: npm install
+        run: npm ci
         
       - name: Build site
         run: npm run build
@@ -31,8 +31,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add dist -f
-          git commit -m "Deploy from master branch [skip ci]"
           git subtree push --prefix dist origin gh-pages
 
 
