@@ -50,13 +50,11 @@ jobs:
           git push -f origin gh-pages
 
       - name: Setup GitHub CLI
-        if: ${{ secrets.CUSTOM_DOMAIN != '' }}
         uses: cli/setup-gh@v4
         with:
           version: latest
 
-      - name: Configure Custom Domain (if secret exists)
-        if: ${{ secrets.CUSTOM_DOMAIN != '' }}
+      - name: Configure Custom Domain
         run: |
           gh api repos/${{ github.repository }}/pages --method PUT --field 'cname=${{ secrets.CUSTOM_DOMAIN }}'
         env:
