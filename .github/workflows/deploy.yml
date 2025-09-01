@@ -49,6 +49,12 @@ jobs:
           git commit -m "Deploy to GitHub Pages"
           git push -f origin gh-pages
 
+      - name: Setup GitHub CLI
+        if: ${{ secrets.CUSTOM_DOMAIN != '' }}
+        uses: cli/setup-gh@v4
+        with:
+          version: latest
+
       - name: Configure Custom Domain (if secret exists)
         if: ${{ secrets.CUSTOM_DOMAIN != '' }}
         run: |
