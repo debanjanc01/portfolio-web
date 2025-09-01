@@ -48,3 +48,10 @@ jobs:
           git add .
           git commit -m "Deploy to GitHub Pages"
           git push -f origin gh-pages
+
+      - name: Configure Custom Domain (if secret exists)
+        if: ${{ secrets.CUSTOM_DOMAIN != '' }}
+        run: |
+          gh api repos/${{ github.repository }}/pages --method PUT --field 'cname=${{ secrets.CUSTOM_DOMAIN }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
