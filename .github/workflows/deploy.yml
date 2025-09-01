@@ -50,7 +50,7 @@ jobs:
           git push -f origin gh-pages
 
       - name: Setup GitHub CLI
-        uses: cli/setup-gh@v4
+        uses: cli/setup-gh@v3
         with:
           version: latest
 
