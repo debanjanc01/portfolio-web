@@ -1,16 +1,57 @@
 ---
-
+import BaseLayout from "../layouts/Base.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Debanjan — Senior Software Engineer" description="Senior Software Engineer — shipping resilient code and systems for 7 years.">
+  <section class="hero">
+    <h1>Debanjan</h1>
+    <p class="muted">Senior Software Engineer — shipping resilient code and systems for 7 years</p>
+
+    <div class="terminal card" role="region" aria-label="Terminal hero">
+      <pre><span class="prompt">$</span> whoami
+backend engineer — reliability, correctness, observability
+
+<span class="prompt">$</span> skills
+languages: ruby, go, java
+infra/db: postgres, mongodb, elasticsearch, redis, kafka, kubernetes
+observability: prometheus, grafana, datadog, opentelemetry
+
+<span class="prompt">$</span> contact --email
+debanjanc01@gmail.com  <button id="copy-email" class="btn">copy</button>
+
+<span class="prompt">$</span> open --notes    /notes
+<span class="prompt">$</span> open --blog     /blog
+<span class="prompt">$</span> open --about    /about
+<span class="prompt">$</span> open --timeline /timeline
+
+# tips: g a → About, g c → Contact, g t → Timeline
+</pre>
+    </div>
+
+    <script type="module">
+      const emailBtn = document.querySelector('#copy-email');
+      emailBtn?.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText('debanjanc01@gmail.com'); emailBtn.textContent = 'copied'; setTimeout(()=> emailBtn.textContent = 'copy', 2000); } catch {}
+      });
+      window.addEventListener('keydown', (e) => {
+        const k = (e.key || '').toLowerCase();
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+        if (k === 'g') { (window as any)._g = true; return; }
+        if ((window as any)._g) {
+          (window as any)._g = false;
+          if (k === 'a') location.href = '/about';
+          
+          if (k === 'c') location.href = '/contact';
+          
+          if (k === 't') location.href = '/timeline';
+        }
+      });
+    </script>
+
+    <div class="links">
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/timeline">Timeline</a>
+    </div>
+  </section>
+</BaseLayout>

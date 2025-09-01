@@ -1,0 +1,74 @@
+---
+import BaseLayout from "../../layouts/Base.astro";
+import TimelineEvent from "../../components/TimelineEvent.astro";
+import { getCollection } from 'astro:content';
+const entries = (await getCollection('timeline')).sort((a,b) => (b.data.start > a.data.start ? 1 : -1));
+---
+
+<BaseLayout title="Timeline — Event Stream" description="Kafka topic-style timeline mockup.">
+  <h1>Timeline — Event Stream</h1>
+  <div class="topic">topic: career.events</div>
+  <ul class="stream">
+    {await Promise.all(entries.map(async (e) => {
+      const startDate = new Date(e.data.start);
+      const startLabel = `${startDate.getFullYear()}-${String(startDate.getMonth()+1).padStart(2,'0')}`;
+      
+      // Create end date label
+      let endLabel;
+      if (e.data.end) {
+        const endDate = new Date(e.data.end);
+        endLabel = `${endDate.getFullYear()}-${String(endDate.getMonth()+1).padStart(2,'0')}`;
+      } else {
+        endLabel = 'present';
+      }
+      
+      const eventMessage = `${e.data.role} @ ${e.data.company}`;
+      
+      const payload = { 
+        stack: e.data.stack, 
+        focus: e.data.focus,
+        location: e.data.location
+      };
+      
+      const { Content } = await e.render();
+      return (
+        <TimelineEvent 
+          startLabel={startLabel}
+          endLabel={endLabel}
+          eventMessage={eventMessage} 
+          payload={payload}
+        >
+          <Content />
+        </TimelineEvent>
+      );
+    }))}
+  </ul>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+  }
+  
+  .topic {
+    font-family: 'Courier New', monospace;
+    color: #666;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    background: #f5f5f5;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  
+  .stream {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>
+
+

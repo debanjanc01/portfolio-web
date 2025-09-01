@@ -1,0 +1,271 @@
+---
+export interface Props {
+  startLabel: string;
+  endLabel: string;
+  eventMessage: string;
+  payload: Record<string, unknown>;
+}
+const { startLabel, endLabel, eventMessage, payload } = Astro.props as Props;
+
+// Determine if this is a completed role (has an end date that's not 'present')
+const isCompleted = endLabel !== 'present';
+---
+<li class="event">
+  <div class="event-header" role="button" tabindex="0" aria-label="Toggle details">
+    <div class="date-range">
+      <time class="start-date">[{startLabel}]</time>
+      <span class="date-separator">→</span>
+      <time class="end-date" data-ended={isCompleted}>[{endLabel}]</time>
+    </div>
+    <span class="event-message">{eventMessage}</span>
+    <div class="toggle-btn" aria-hidden="true">
+      <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+  
+  <div class="event-content" data-expanded="true">
+    <div class="payload-section">
+      <h4>Payload:</h4>
+      <div class="payload-data">
+        {Object.entries(payload).map(([key, value]) => (
+          <div class="payload-item">
+            <span class="key">{key}:</span>
+            <span class="value">
+              {Array.isArray(value) ? value.join(', ') : String(value)}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+    
+    <div class="description-section">
+      <h4>Description:</h4>
+      <div class="description">
+        <slot />
+      </div>
+    </div>
+  </div>
+</li>
+
+<script>
+  // Add click handlers for header clicks
+  document.addEventListener('DOMContentLoaded', () => {
+    const eventHeaders = document.querySelectorAll('.event-header');
+    
+    eventHeaders.forEach(header => {
+      header.addEventListener('click', () => {
+        const eventContent = header.closest('.event').querySelector('.event-content');
+        const chevron = header.querySelector('.chevron');
+        const isExpanded = eventContent.getAttribute('data-expanded') === 'true';
+        
+        if (isExpanded) {
+          eventContent.setAttribute('data-expanded', 'false');
+          chevron.style.transform = 'rotate(-90deg)';
+        } else {
+          eventContent.setAttribute('data-expanded', 'true');
+          chevron.style.transform = 'rotate(0deg)';
+        }
+      });
+      
+      // Add keyboard support for accessibility
+      header.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          header.click();
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .event {
+    background: #ffffff;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+  }
+  
+  .event:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-color: #d1d5d9;
+  }
+  
+  .event-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    padding: 0.75rem;
+    margin: -0.75rem -0.75rem 1rem -0.75rem;
+  }
+  
+  .event-header:hover {
+    background: #f9fafb;
+  }
+  
+  .event-header:focus {
+    outline: none;
+  }
+  
+  .date-range {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Courier New', monospace;
+  }
+  
+  .start-date {
+    font-weight: bold;
+    color: #2563eb;
+    background: #eff6ff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  
+  .date-separator {
+    color: #6b7280;
+    font-weight: 500;
+  }
+  
+  .end-date {
+    font-weight: bold;
+    color: #059669;
+    background: #ecfdf5;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  
+  /* Muted green for completed roles */
+  .end-date[data-ended="true"] {
+    color: #6b7280;
+    background: #f3f4f6;
+  }
+  
+  .event-message {
+    font-weight: 500;
+    color: #1f2937;
+    flex: 1;
+    font-size: 1.1rem;
+  }
+  
+  .toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    pointer-events: none;
+  }
+  
+  .chevron {
+    transition: transform 0.2s ease;
+  }
+  
+  .event-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    align-items: start;
+  }
+  
+  .event-content[data-expanded="false"] {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  .event-content[data-expanded="true"] {
+    max-height: 1000px;
+    opacity: 1;
+    margin-top: 1rem;
+    margin-bottom: 0;
+  }
+  
+  .payload-section h4,
+  .description-section h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #6b7280;
+    margin: 0 0 0.75rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+  }
+  
+  .payload-data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+  
+  .payload-item {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .payload-item .key {
+    font-weight: 600;
+    color: #374151;
+    min-width: 80px;
+  }
+  
+  .payload-item .value {
+    color: #6b7280;
+    font-family: 'Courier New', monospace;
+  }
+  
+  .description {
+    color: #374151;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    padding: 0.5rem 0;
+  }
+  
+  @media (max-width: 768px) {
+    .event-content {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .event-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    
+    .event-message {
+      width: 100%;
+    }
+    
+    .date-range {
+      align-self: flex-start;
+    }
+    
+    .toggle-btn {
+      align-self: flex-end;
+      margin-top: -2rem;
+    }
+  }
+</style>
+
+
