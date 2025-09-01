@@ -22,3 +22,20 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Build artifacts that might be copied to root
+/*.html
+/*.css
+/*.js
+/*.xml
+/robots.txt
+/sitemap*.xml
+
+# Common build/temp files
+*.map
+*.min.css
+*.min.js
+*.bundle.js
+*.chunk.js
+*.tmp
+*.cache
