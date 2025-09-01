@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://debanjanc01.github.io/portfolio-web',
+  site: 'https://theybanjan.com',
   integrations: [sitemap()],
   build: {
     format: 'directory',
