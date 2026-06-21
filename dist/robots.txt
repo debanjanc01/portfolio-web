@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://debanjan.github.io/portfolio-web/sitemap-index.xml
+
+
