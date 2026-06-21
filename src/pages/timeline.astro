@@ -54,20 +54,21 @@ const entries = (await getCollection('timeline')).sort((a,b) => (b.data.start > 
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
-    color: #1a1a1a;
+    color: var(--fg);
   }
-  
+
   .topic {
     font-family: 'Courier New', monospace;
-    color: #666;
+    color: var(--fg-muted);
     margin-bottom: 2rem;
     font-size: 0.9rem;
-    background: #f5f5f5;
+    background: var(--card-bg);
     padding: 0.5rem 1rem;
     border-radius: 4px;
     display: inline-block;
+    border: 1px solid var(--border);
   }
-  
+
   .stream {
     list-style: none;
     padding: 0;
