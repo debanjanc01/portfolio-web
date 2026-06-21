@@ -2,34 +2,58 @@
 export interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
 }
-const { title = 'Debanjan — Senior Backend Engineer', description = 'Minimal portfolio and projects.' } = Astro.props as Props;
+const {
+  title = 'Debanjan — Senior Software Engineer',
+  description = 'Senior software engineer, 8+ yrs. How real systems behave, break, and get debugged, plus the judgment that isn\'t in the code.',
+  ogImage = '/android-chrome-512x512.png'
+} = Astro.props as Props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
 ---
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    
+
     <!-- Apple Touch Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    
+
     <!-- Android Chrome Icons -->
     <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
-    
+
     <!-- Web App Manifest -->
     <link rel="manifest" href="/site.webmanifest" />
-    
+
+    <!-- SEO -->
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content="Debanjan" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@theybanjan" />
+    <meta name="twitter:creator" content="@theybanjan" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
     <meta name="generator" content={Astro.generator} />
     <link rel="stylesheet" href="/styles/global.css" />
   </head>

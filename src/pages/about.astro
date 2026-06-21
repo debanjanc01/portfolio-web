@@ -2,41 +2,68 @@
 import BaseLayout from "../layouts/Base.astro";
 ---
 
-<BaseLayout title="About — Debanjan" description="Senior Software Engineer — shipping resilient code and systems for 7 years.">
+<BaseLayout
+  title="About — Debanjan"
+  description="Senior software engineer with 8+ years building and operating backend systems. Production experience, engineering judgment, and the tradeoffs that matter."
+  ogImage="/og-image.png"
+>
   <h1>About</h1>
-  <p>Senior Software Engineer (Backend). I build reliable services with clear contracts, strong observability, and practical tooling. I prefer boring tech that scales, fast feedback loops, and documents that age well.</p>
+  <p>Senior Software Engineer with 8+ years building and operating backend systems. I share how real systems behave, AI in practice, and the engineering and product judgment behind good decisions.</p>
 
-  <h2>Areas</h2>
+  <h2>What I Do</h2>
+  <p>I build reliable services with clear contracts, strong observability, and practical tooling. My focus is production systems: how they work, how they fail, and how to debug them.</p>
+
+  <h2>Engineering Areas</h2>
   <ul>
-    <li>APIs & services — contracts, performance, migrations</li>
-    <li>Data & search — Postgres, MongoDB, Elasticsearch</li>
-    <li>Reliability & observability — SLOs, metrics, logs, traces</li>
-    <li>Developer tooling — automation, DX, CI</li>
+    <li><strong>APIs & services</strong> — contracts, performance, migrations</li>
+    <li><strong>Data & search</strong> — PostgreSQL, MongoDB, Elasticsearch</li>
+    <li><strong>Reliability & observability</strong> — SLOs, metrics, logs, traces</li>
+    <li><strong>Developer tooling</strong> — automation, developer experience, CI</li>
   </ul>
 
-  <h2>Stack</h2>
-  <p><strong>Languages</strong>: Ruby, Go, Java</p>
-  <p><strong>Infra & data</strong>: Postgres, MongoDB, Elasticsearch, Redis, Kafka, Kubernetes</p>
+  <h2>Current Stack</h2>
+  <p><strong>Languages</strong>: Ruby, Go, Java, Python</p>
+  <p><strong>Infrastructure & data</strong>: PostgreSQL, MongoDB, Elasticsearch, Redis, Aerospike, Kafka, Kubernetes</p>
   <p><strong>Observability</strong>: Prometheus, Grafana, Datadog, OpenTelemetry</p>
 
-  <h2>Writing</h2>
-  <p>I write about monitoring, backend architecture, and developer tooling (SigNoz, Geekflare, Medium). Links on my <a href="https://github.com/debanjanc01" target="_blank" rel="noreferrer">GitHub</a> and <a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">LinkedIn</a>.</p>
-
-  <h2>Small things I built</h2>
+  <h2>Public Work</h2>
+  <p><strong>Writing</strong>: I've written for <a href="https://signoz.io/" target="_blank" rel="noreferrer">SigNoz</a>, <a href="https://geekflare.com/author/debanjan/" target="_blank" rel="noreferrer">Geekflare</a>, and <a href="https://theybanjan.medium.com" target="_blank" rel="noreferrer">Medium</a> about monitoring, backend architecture, and production systems.</p>
+  <p><strong>Projects</strong>:</p>
   <ul>
-    <li><strong>letter</strong> — update Postman collections from locally saved files</li>
-    <li><strong>bytecase</strong> — handy Java snippets & scripts</li>
+    <li><a href="https://github.com/debanjanc01/letter" target="_blank" rel="noreferrer"><strong>letter</strong></a> — Go tool for updating Postman collections from locally saved files</li>
+    <li><a href="https://github.com/debanjanc01/bytecase" target="_blank" rel="noreferrer"><strong>bytecase</strong></a> — collection of useful code snippets and scripts</li>
   </ul>
 
-  <h2>Principles</h2>
+  <h2>Engineering Principles</h2>
   <ul>
-    <li>Clarity over cleverness</li>
-    <li>Measure impact; make it observable</li>
-    <li>Design for on-call: idempotent, backpressure, timeouts</li>
-    <li>Small, reversible steps</li>
+    <li><strong>Clarity over cleverness</strong></li>
+    <li><strong>Measure impact and make it observable</strong></li>
+    <li><strong>Design for on-call</strong>: account for idempotency, backpressure, and timeouts</li>
+    <li><strong>Prefer small, reversible steps</strong></li>
+    <li>Prefer boring technology that scales</li>
+    <li>Prefer fast feedback loops</li>
+    <li>Prefer documents that age well</li>
   </ul>
 
-  <p><a href="/contact">Contact</a> · <a href="https://github.com/debanjanc01" target="_blank" rel="noreferrer">GitHub</a> · <a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">LinkedIn</a></p>
+  <h2>Recognition</h2>
+  <ul>
+    <li>Above and Beyond, Q1 FY 2022-2023, Snapdeal</li>
+    <li>Customer Champion, Q3 FY 2022-2023, Snapdeal</li>
+    <li>Fantabulous Award, 2020-2021, NRI Financial Technologies</li>
+    <li>Shining Star Award, Q2 2019-2020 & Q2 2020-2021, NRI Financial Technologies</li>
+  </ul>
+
+  <div class="links-section">
+    <p><a href="/contact">Contact</a> · <a href="/timeline">Timeline</a> · <a href="https://github.com/debanjanc01" target="_blank" rel="noreferrer">GitHub</a> · <a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">LinkedIn</a> · <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">X</a></p>
+  </div>
 </BaseLayout>
+
+<style>
+  .links-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eaeaea;
+  }
+</style>
 
 

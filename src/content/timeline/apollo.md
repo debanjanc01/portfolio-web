@@ -1,9 +1,9 @@
 ---
-role: Senior Software Engineer
+role: Senior Software Engineer II
 company: Apollo.io
 start: 2024-04-01
 location: Remote
-stack: ["ruby", "rails", "postgresql", "redis"]
-focus: ["email deliverability", "sales engagement", "sequences"]
+stack: ["ruby", "rails", "postgresql", "redis", "mongodb", "elasticsearch"]
+focus: ["email deliverability", "sales engagement", "sequences", "internal AI tooling"]
 ---
-Handled sales engagement workflows with a strong focus on improving email deliverability and automation of sequences.
+Working on sales engagement workflows with a focus on email deliverability, connectivity, sequences, and internal AI tooling. Promoted to Senior Software Engineer II in April 2026.

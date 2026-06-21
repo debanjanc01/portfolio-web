@@ -5,7 +5,11 @@ import { getCollection } from 'astro:content';
 const entries = (await getCollection('timeline')).sort((a,b) => (b.data.start > a.data.start ? 1 : -1));
 ---
 
-<BaseLayout title="Timeline — Event Stream" description="Kafka topic-style timeline mockup.">
+<BaseLayout
+  title="Timeline — Debanjan"
+  description="Career timeline: 8+ years of backend engineering experience across production systems, email infrastructure, and distributed systems."
+  ogImage="/android-chrome-512x512.png"
+>
   <h1>Timeline — Event Stream</h1>
   <div class="topic">topic: career.events</div>
   <ul class="stream">

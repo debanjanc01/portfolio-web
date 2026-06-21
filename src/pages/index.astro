@@ -2,56 +2,54 @@
 import BaseLayout from "../layouts/Base.astro";
 ---
 
-<BaseLayout title="Debanjan — Senior Software Engineer" description="Senior Software Engineer — shipping resilient code and systems for 7 years.">
+<BaseLayout
+  title="Debanjan — Senior Software Engineer"
+  description="Senior software engineer, 8+ yrs. How real systems behave, break, and get debugged, plus the judgment that isn't in the code."
+  ogImage="/og-image.png"
+>
   <section class="hero">
     <h1>Debanjan</h1>
-    <p class="muted">Senior Software Engineer — shipping resilient code and systems for 7 years</p>
+    <p class="tagline">Senior software engineer, 8+ yrs. How real systems behave, break, and get debugged, plus the judgment that isn't in the code.</p>
 
     <div class="terminal card" role="region" aria-label="Terminal hero">
       <pre><span class="prompt">$</span> whoami
-backend engineer — reliability, correctness, observability
+backend engineer — production systems, reliability, observability
 
-<span class="prompt">$</span> skills
-languages: ruby, go, java
-infra/db: postgres, mongodb, elasticsearch, redis, kafka, kubernetes
-observability: prometheus, grafana, datadog, opentelemetry
+<span class="prompt">$</span> current
+role: Senior Software Engineer II @ Apollo.io
+focus: email deliverability, sales engagement, sequences
 
-<span class="prompt">$</span> contact --email
-debanjanc01@gmail.com  <button id="copy-email" class="btn">copy</button>
+<span class="prompt">$</span> experience
+8+ years building and operating backend systems
+ruby · go · java · rails · postgres · mongodb · elasticsearch
+redis · kafka · kubernetes · observability tooling
 
-<span class="prompt">$</span> open --notes    /notes
-<span class="prompt">$</span> open --blog     /blog
-<span class="prompt">$</span> open --about    /about
-<span class="prompt">$</span> open --timeline /timeline
+<span class="prompt">$</span> content
+writing: SigNoz, Geekflare, Medium
+projects: letter, bytecase (github.com/debanjanc01)
 
-# tips: g a → About, g c → Contact, g t → Timeline
+<span class="prompt">$</span> find --me
+<a href="https://github.com/debanjanc01" target="_blank" rel="noreferrer">github</a>   <a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">linkedin</a>   <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">x</a>   <a href="mailto:debanjanc01@gmail.com">email</a>
+
+<span class="prompt">$</span> navigate
+<a href="/about">about</a>   <a href="/timeline">timeline</a>   <a href="/contact">contact</a>
+
+# keyboard: g a → About, g c → Contact, g t → Timeline
 </pre>
     </div>
 
     <script type="module">
-      const emailBtn = document.querySelector('#copy-email');
-      emailBtn?.addEventListener('click', async () => {
-        try { await navigator.clipboard.writeText('debanjanc01@gmail.com'); emailBtn.textContent = 'copied'; setTimeout(()=> emailBtn.textContent = 'copy', 2000); } catch {}
-      });
       window.addEventListener('keydown', (e) => {
         const k = (e.key || '').toLowerCase();
         if (e.ctrlKey || e.metaKey || e.altKey) return;
         if (k === 'g') { (window as any)._g = true; return; }
         if ((window as any)._g) {
           (window as any)._g = false;
-                  if (k === 'a') location.href = '/about';
-        
-        if (k === 'c') location.href = '/contact';
-        
-        if (k === 't') location.href = '/timeline';
+          if (k === 'a') location.href = '/about';
+          else if (k === 'c') location.href = '/contact';
+          else if (k === 't') location.href = '/timeline';
         }
       });
     </script>
-
-    <div class="links">
-      <a href="/timeline">Timeline</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
-    </div>
   </section>
 </BaseLayout>

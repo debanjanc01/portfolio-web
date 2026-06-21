@@ -1,12 +1,27 @@
-/* Minimal, typography-first styles inspired by dead simple sites */
+/* Typography-first portfolio — clean, fast, engineering-native */
 :root {
   --bg: #ffffff;
   --fg: #111111;
-  --muted: #666666;
-  --link: #22c55e;
+  --fg-muted: #666666;
+  --accent: #2dd4bf;
+  --accent-dim: #1d8f81;
+  --border: #e5e7eb;
+  --card-bg: #fafafa;
   --maxw: 720px;
   --pad: 24px;
   --radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0a0a0a;
+    --fg: #eef2f8;
+    --fg-muted: #97a1b4;
+    --accent: #2dd4bf;
+    --accent-dim: #1d8f81;
+    --border: #2c3a57;
+    --card-bg: #121b30;
+  }
 }
 
 * { box-sizing: border-box; }
@@ -14,9 +29,11 @@ html, body { margin: 0; padding: 0; }
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   line-height: 1.6;
   font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .site-header, .site-footer {
@@ -49,23 +66,49 @@ body {
   margin: 24px auto 64px;
 }
 
-h1, h2, h3 { line-height: 1.2; margin: 24px 0 12px; }
-h1 { font-size: 2.25rem; }
-h2 { font-size: 1.6rem; }
-h3 { font-size: 1.3rem; }
-p { margin: 12px 0; color: var(--fg); }
-small, .muted { color: var(--muted); }
+h1, h2, h3 {
+  line-height: 1.2;
+  margin: 24px 0 12px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+h1 { font-size: 2.5rem; margin-top: 0; }
+h2 { font-size: 1.75rem; margin-top: 32px; }
+h3 { font-size: 1.4rem; }
 
-a { color: var(--fg); }
-a:hover { color: var(--link); }
+p { margin: 12px 0; color: var(--fg); }
+small, .muted { color: var(--fg-muted); }
+
+.tagline {
+  font-size: 1.125rem;
+  color: var(--fg-muted);
+  line-height: 1.7;
+  margin: 16px 0 24px;
+}
+
+a {
+  color: var(--fg);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
 
 ul, ol { padding-left: 20px; }
 
 .card {
-  border: 1px solid #eaeaea;
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px;
-  margin: 12px 0;
+  padding: 20px;
+  margin: 16px 0;
+  background: var(--card-bg);
+  transition: border-color 0.2s ease;
+}
+.card:hover {
+  border-color: var(--accent-dim);
 }
 
 .grid {
@@ -84,11 +127,26 @@ ul, ol { padding-left: 20px; }
 .links a { margin-right: 16px; }
 
 /* Terminal hero */
-.terminal { background: #0b0b0b; color: #d1fae5; }
-.terminal pre { margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 14px; white-space: pre-wrap; }
-.terminal .prompt { color: var(--link); }
-.btn { font-size: 12px; padding: 2px 6px; border-radius: 4px; border: 1px solid #444; background: #111; color: #ddd; cursor: pointer; }
-.btn:hover { border-color: var(--link); }
+.terminal {
+  background: #0b0b0b;
+  color: #d1fae5;
+  border: 1px solid #1a1a1a;
+}
+.terminal pre {
+  margin: 0;
+  font-family: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 14.5px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+.terminal .prompt { color: var(--accent); font-weight: 600; }
+.terminal a {
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+}
+.terminal a:hover {
+  border-bottom-color: var(--accent);
+}
 
 /* Timeline prototypes */
 .timeline { list-style: none; padding: 0; margin: 24px 0; position: relative; }
