@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../layouts/Base.astro";
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('work'))
+  .filter((e) => !e.data.draft)
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+---
+
+<BaseLayout
+  title="Work — Debanjan"
+  description="Selected projects and proof of work: tools, experiments, and the engineering decisions behind them."
+>
+  <div class="eyebrow">Work</div>
+  <hr class="rule" />
+  <h1>Work</h1>
+  <p class="lede">Selected projects and proof of work. Not a list of repositories — the decision and the lesson behind each one.</p>
+
+  <div style="margin-top:24px">
+    {projects.map((p) => (
+      <article class="card">
+        <div class="work-head">
+          <h3 style="margin:0">
+            {p.data.repo ? (
+              <a href={p.data.repo} target="_blank" rel="noreferrer">{p.data.title}</a>
+            ) : p.data.title}
+          </h3>
+          <span class="tag">{p.data.kind}</span>
+        </div>
+        <p style="margin:8px 0 12px">{p.data.summary}</p>
+        {p.data.decision && (
+          <p class="work-note"><span class="tag">decision</span>{p.data.decision}</p>
+        )}
+        {p.data.lesson && (
+          <p class="work-note"><span class="tag">lesson</span>{p.data.lesson}</p>
+        )}
+        {(p.data.repo || p.data.demo) && (
+          <p class="linkline" style="margin:10px 0 0">
+            {p.data.repo && <a href={p.data.repo} target="_blank" rel="noreferrer">repo ↗</a>}
+            {p.data.demo && <> · <a href={p.data.demo} target="_blank" rel="noreferrer">demo ↗</a></>}
+          </p>
+        )}
+      </article>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .work-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .work-note { margin: 6px 0; color: var(--ink-body); font-size: 0.97rem; }
+  .card h3 a { border: 0; }
+  .card h3 a:hover { border-bottom: 1px solid var(--ink); }
+</style>
