@@ -2,78 +2,42 @@
 import BaseLayout from "../layouts/Base.astro";
 import TimelineEvent from "../components/TimelineEvent.astro";
 import { getCollection } from 'astro:content';
-const entries = (await getCollection('timeline')).sort((a,b) => (b.data.start > a.data.start ? 1 : -1));
+const entries = (await getCollection('timeline')).sort((a, b) => (b.data.start > a.data.start ? 1 : -1));
+
+const fmt = (d: Date) => `${d.getFullYear()}`;
 ---
 
 <BaseLayout
   title="Timeline — Debanjan"
-  description="Career timeline: 8+ years of backend engineering experience across production systems, email infrastructure, and distributed systems."
-  ogImage="/android-chrome-512x512.png"
+  description="Career timeline: 8+ years of backend engineering across production systems, email infrastructure, and distributed systems."
 >
-  <h1>Timeline — Event Stream</h1>
-  <div class="topic">topic: career.events</div>
-  <ul class="stream">
+  <div class="eyebrow">Career</div>
+  <hr class="rule" />
+  <h1>Timeline</h1>
+  <p class="lede">Eight-plus years building and operating backend systems — communication platforms, search and reconciliation, and email infrastructure at scale.</p>
+
+  <ol class="career">
     {await Promise.all(entries.map(async (e) => {
-      const startDate = new Date(e.data.start);
-      const startLabel = `${startDate.getFullYear()}-${String(startDate.getMonth()+1).padStart(2,'0')}`;
-      
-      // Create end date label
-      let endLabel;
-      if (e.data.end) {
-        const endDate = new Date(e.data.end);
-        endLabel = `${endDate.getFullYear()}-${String(endDate.getMonth()+1).padStart(2,'0')}`;
-      } else {
-        endLabel = 'present';
-      }
-      
-      const eventMessage = `${e.data.role} @ ${e.data.company}`;
-      
-      const payload = { 
-        stack: e.data.stack, 
-        focus: e.data.focus,
-        location: e.data.location
-      };
-      
+      const start = fmt(e.data.start);
+      const end = e.data.end ? fmt(e.data.end) : 'present';
       const { Content } = await e.render();
       return (
-        <TimelineEvent 
-          startLabel={startLabel}
-          endLabel={endLabel}
-          eventMessage={eventMessage} 
-          payload={payload}
+        <TimelineEvent
+          range={start === end ? start : `${start} — ${end}`}
+          current={!e.data.end}
+          role={e.data.role}
+          company={e.data.company}
+          location={e.data.location}
+          focus={e.data.focus}
+          stack={e.data.stack}
         >
           <Content />
         </TimelineEvent>
       );
     }))}
-  </ul>
+  </ol>
 </BaseLayout>
 
 <style>
-  h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: var(--fg);
-  }
-
-  .topic {
-    font-family: 'Courier New', monospace;
-    color: var(--fg-muted);
-    margin-bottom: 2rem;
-    font-size: 0.9rem;
-    background: var(--card-bg);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    display: inline-block;
-    border: 1px solid var(--border);
-  }
-
-  .stream {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
+  .career { list-style: none; padding: 0; margin: 32px 0 0; }
 </style>
-
-

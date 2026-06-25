@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../layouts/Base.astro";
+
+// Keep this current. Update the date and the lines below when things change.
+// TODO(debanjan): personalize freely — this is your voice, not a résumé.
+const updated = "June 2026";
+---
+
+<BaseLayout
+  title="Now — Debanjan"
+  description="What Debanjan is focused on right now — work, writing, and what he's learning."
+>
+  <div class="eyebrow">Now · updated {updated}</div>
+  <hr class="rule" />
+  <h1>Now</h1>
+  <p class="lede">A snapshot of what has my attention at the moment. Inspired by the <a href="https://nownownow.com/about" target="_blank" rel="noreferrer">/now page</a> idea.</p>
+
+  <h2>Working on</h2>
+  <p>Email deliverability and sequences at Apollo.io — the unglamorous, high-leverage parts of making sure messages actually arrive and behave. Most of my time goes into systems that have to be right under retries, overload, and partial failure.</p>
+
+  <h2>Writing</h2>
+  <p>Building a steadier writing practice about backend systems, AI in real software, and the judgment that isn't in the code. Consistency over novelty: I'd rather show up regularly than chase a viral moment.</p>
+
+  <h2>Thinking about</h2>
+  <p>The human side of senior engineering — staying calm and structured in incidents instead of relying on heroics, mentoring people earlier in the path, and protecting focus and energy over the long run. Sustained attention is a finite resource; how you spend it is an engineering decision too.</p>
+
+  <h2>Learning</h2>
+  <p>Trying to keep learning something new most days, and to build small tools when a problem is genuinely mine to solve. Building beats passive consumption.</p>
+
+  <p class="linkline" style="margin-top:40px">
+    <a href="/about">about →</a> ·
+    <a href="/writing">writing →</a>
+  </p>
+</BaseLayout>

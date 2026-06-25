@@ -1,0 +1,26 @@
+---
+export interface Props {
+  caption: string;
+  variant?: 'console' | 'paper';
+}
+const { caption, variant = 'paper' } = Astro.props as Props;
+---
+{variant === 'console' ? (
+  <figure class="figure console">
+    <div class="fig-bar">
+      <span class="dot" style="background:#ef5b6b"></span>
+      <span class="dot" style="background:#f5b454"></span>
+      <span class="dot" style="background:#2dd4bf"></span>
+      <span class="label">{caption}</span>
+    </div>
+    <div class="fig-body">
+      <slot />
+    </div>
+  </figure>
+) : (
+  <figure class="figure paper">
+    <figcaption class="fig-cap">{caption}</figcaption>
+    <div class="fig-rule"></div>
+    <slot />
+  </figure>
+)}

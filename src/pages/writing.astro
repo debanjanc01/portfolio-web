@@ -1,0 +1,97 @@
+---
+import BaseLayout from "../layouts/Base.astro";
+import { getCollection } from 'astro:content';
+
+const all = (await getCollection('writing')).filter((e) => !e.data.draft);
+const entries = all.sort((a, b) => {
+  const ad = a.data.date ? a.data.date.getTime() : 0;
+  const bd = b.data.date ? b.data.date.getTime() : 0;
+  if (ad !== bd) return bd - ad;
+  return (b.data.order ?? 0) - (a.data.order ?? 0);
+});
+
+const kinds = Array.from(new Set(entries.map((e) => e.data.kind)));
+const hasPosts = entries.some((e) => e.data.kind === 'post');
+
+const fmtDate = (d?: Date) =>
+  d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}` : '';
+---
+
+<BaseLayout
+  title="Writing — Debanjan"
+  description="Selected writing and posts on backend systems, production failure, debugging, and engineering judgment."
+>
+  <div class="eyebrow">Writing</div>
+  <hr class="rule" />
+  <h1>Writing</h1>
+  <p class="lede">Articles, posts, and notes on how backend systems behave, break, and get debugged — and the judgment behind the decisions.</p>
+
+  {kinds.length > 1 && (
+    <div class="filters" role="group" aria-label="Filter writing by kind">
+      <button class="filter is-active" data-kind="all" type="button">all</button>
+      {kinds.map((k) => (
+        <button class="filter" data-kind={k} type="button">{k}</button>
+      ))}
+    </div>
+  )}
+
+  <div class="rows" id="writing-rows" style="margin-top:18px">
+    {entries.map((e) => (
+      <div class="row writing-row" data-kind={e.data.kind}>
+        <span class="row-left">
+          <span class="tag">{e.data.kind}</span>
+          {e.data.url ? (
+            <a class="row-title" href={e.data.url} target="_blank" rel="noreferrer">{e.data.title}</a>
+          ) : (
+            <a class="row-title" href={`/writing/${e.slug}`}>{e.data.title}</a>
+          )}
+        </span>
+        <span class="row-meta">{e.data.source}{e.data.date ? ` · ${fmtDate(e.data.date)}` : ''}</span>
+      </div>
+    ))}
+  </div>
+
+  {!hasPosts && (
+    <p class="muted" style="margin-top:28px; font-size:0.95rem">
+      Selected LinkedIn and X posts will appear here once added.
+    </p>
+  )}
+
+  <p class="linkline" style="margin-top:40px">
+    Also writing at
+    <a href="https://geekflare.com/author/debanjan/" target="_blank" rel="noreferrer">Geekflare</a> ·
+    <a href="https://theybanjan.medium.com" target="_blank" rel="noreferrer">Medium</a>
+  </p>
+</BaseLayout>
+
+<style>
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+  .filter {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-muted);
+    background: transparent;
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    padding: 3px 10px;
+    cursor: pointer;
+    transition: color 0.18s ease, border-color 0.18s ease;
+  }
+  .filter:hover { color: var(--ink); border-color: var(--ink-muted); }
+  .filter.is-active { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+  .row-left { display: flex; align-items: baseline; min-width: 0; }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter');
+  const rows = document.querySelectorAll<HTMLElement>('.writing-row');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const kind = btn.dataset.kind;
+      buttons.forEach((b) => b.classList.toggle('is-active', b === btn));
+      rows.forEach((r) => {
+        r.style.display = kind === 'all' || r.dataset.kind === kind ? '' : 'none';
+      });
+    });
+  });
+</script>
