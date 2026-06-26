@@ -5,6 +5,11 @@ import { getCollection } from 'astro:content';
 
 const published = (await getCollection('writing')).filter((e) => !e.data.draft);
 
+const selectedWork = (await getCollection('work'))
+  .filter((e) => !e.data.draft)
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))
+  .slice(0, 2);
+
 const byRecency = (a, b) => {
   const ad = a.data.date ? a.data.date.getTime() : 0;
   const bd = b.data.date ? b.data.date.getTime() : 0;
@@ -39,7 +44,7 @@ const fmtDate = (d) =>
     <p class="lede">Production is where a design becomes visible. I work on email deliverability and sequences at Apollo.io, and write about the engineering judgment that isn't in the code.</p>
 
     <Figure variant="console" caption="fig.1 — retry storm · aerospike incident">
-      <svg viewBox="0 0 536 168" role="img" aria-label="Clients retry a timing-out shard in lockstep, amplifying load; fixed with backoff and jitter">
+      <svg viewBox="0 0 536 178" role="img" aria-label="Clients retry a timing-out shard in lockstep, amplifying load; fixed with backoff and jitter">
         <defs>
           <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#7a8499" stroke-width="1.3"/></marker>
           <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#ef5b6b" stroke-width="1.3"/></marker>
@@ -58,8 +63,8 @@ const fmtDate = (d) =>
         <text x="476" y="94" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#ef8a96">timing out</text>
         <line x1="120" y1="81" x2="205" y2="81" stroke="#7a8499" stroke-width="1.4" marker-end="url(#ar)"/>
         <line x1="327" y1="81" x2="412" y2="81" stroke="#7a8499" stroke-width="1.4" marker-end="url(#ar)"/>
-        <path d="M476,108 C476,152 61,152 61,112" fill="none" stroke="#ef5b6b" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arR)"/>
-        <text x="268" y="147" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#ef8a96">synchronized retries amplify load</text>
+        <path d="M476,108 C476,150 61,150 61,112" fill="none" stroke="#ef5b6b" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arR)"/>
+        <text x="268" y="172" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#ef8a96">synchronized retries amplify load</text>
       </svg>
     </Figure>
   </section>
@@ -74,12 +79,31 @@ const fmtDate = (d) =>
           ) : (
             <a class="row-title" href={`/writing/${w.slug}`}>{w.data.title}</a>
           )}
-          <span class="row-meta">{w.data.source}{w.data.date ? ` · ${fmtDate(w.data.date)}` : ''}</span>
+          <span class="row-meta">{[w.data.source, w.data.date ? fmtDate(w.data.date) : null].filter(Boolean).join(' · ')}</span>
         </div>
       ))}
     </div>
     <p style="margin-top:14px"><a href="/writing">All writing →</a></p>
   </section>
+
+  {selectedWork.length > 0 && (
+    <section class="section">
+      <div class="section-label">Selected work</div>
+      <div class="rows">
+        {selectedWork.map((w) => (
+          <div class="row">
+            {w.data.repo ? (
+              <a class="row-title" href={w.data.repo} target="_blank" rel="noreferrer">{w.data.title}</a>
+            ) : (
+              <a class="row-title" href="/work">{w.data.title}</a>
+            )}
+            <span class="row-meta">{w.data.summary}</span>
+          </div>
+        ))}
+      </div>
+      <p style="margin-top:14px"><a href="/work">All work →</a></p>
+    </section>
+  )}
 
   {selectedPosts.length > 0 && (
     <section class="section">
@@ -101,7 +125,6 @@ const fmtDate = (d) =>
       <a href="https://github.com/debanjanc01" target="_blank" rel="noreferrer">github</a> ·
       <a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">linkedin</a> ·
       <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">x</a> ·
-      <a href="https://theybanjan.medium.com" target="_blank" rel="noreferrer">medium</a> ·
       <a href="mailto:debanjanc01@gmail.com">email</a>
     </p>
   </section>

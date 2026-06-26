@@ -272,7 +272,8 @@ li { margin: 6px 0; }
   color: var(--ink-muted);
   white-space: nowrap;
 }
-.row .tag {
+.tag {
+  display: inline-block;
   font-family: var(--font-mono);
   font-size: 10.5px;
   letter-spacing: 0.04em;
@@ -282,6 +283,7 @@ li { margin: 6px 0; }
   border-radius: 5px;
   padding: 1px 6px;
   margin-right: 8px;
+  vertical-align: middle;
 }
 
 /* Post cards */
@@ -320,6 +322,21 @@ li { margin: 6px 0; }
   padding: 20px;
   margin: 16px 0;
   background: transparent;
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    padding-bottom: 16px;
+  }
+  .brand { flex-shrink: 0; }
+  .nav {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: flex-start;
+  }
 }
 
 @media (max-width: 560px) {

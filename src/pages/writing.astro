@@ -11,7 +11,6 @@ const entries = all.sort((a, b) => {
 });
 
 const kinds = Array.from(new Set(entries.map((e) => e.data.kind)));
-const hasPosts = entries.some((e) => e.data.kind === 'post');
 
 const fmtDate = (d?: Date) =>
   d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}` : '';
@@ -46,21 +45,14 @@ const fmtDate = (d?: Date) =>
             <a class="row-title" href={`/writing/${e.slug}`}>{e.data.title}</a>
           )}
         </span>
-        <span class="row-meta">{e.data.source}{e.data.date ? ` · ${fmtDate(e.data.date)}` : ''}</span>
+        <span class="row-meta">{[e.data.source, e.data.date ? fmtDate(e.data.date) : null].filter(Boolean).join(' · ')}</span>
       </div>
     ))}
   </div>
 
-  {!hasPosts && (
-    <p class="muted" style="margin-top:28px; font-size:0.95rem">
-      Selected LinkedIn and X posts will appear here once added.
-    </p>
-  )}
-
   <p class="linkline" style="margin-top:40px">
     Also writing at
-    <a href="https://geekflare.com/author/debanjan/" target="_blank" rel="noreferrer">Geekflare</a> ·
-    <a href="https://theybanjan.medium.com" target="_blank" rel="noreferrer">Medium</a>
+    <a href="https://geekflare.com/author/debanjan/" target="_blank" rel="noreferrer">Geekflare</a>
   </p>
 </BaseLayout>
 

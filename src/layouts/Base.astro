@@ -7,11 +7,33 @@ export interface Props {
 const {
   title = 'Debanjan — Senior Software Engineer',
   description = 'Senior software engineer, 8+ yrs. How real systems behave, break, and get debugged, plus the judgment that isn\'t in the code.',
-  ogImage = '/android-chrome-512x512.png'
+  ogImage = '/og-image.png'
 } = Astro.props as Props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site);
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Debanjan Choudhury',
+  alternateName: 'Debanjan',
+  url: 'https://theybanjan.com',
+  jobTitle: 'Senior Software Engineer',
+  worksFor: { '@type': 'Organization', name: 'Apollo.io' },
+  knowsAbout: [
+    'Backend systems',
+    'Distributed systems',
+    'Email deliverability',
+    'Reliability engineering',
+    'Observability',
+  ],
+  sameAs: [
+    'https://github.com/debanjanc01',
+    'https://www.linkedin.com/in/debanjanc01',
+    'https://x.com/theybanjan',
+  ],
+};
 ---
 <html lang="en">
   <head>
@@ -45,6 +67,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" type="application/rss+xml" title="Debanjan — Writing" href={new URL('/rss.xml', Astro.site)} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -61,6 +84,9 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Structured data (Person — entity for search + answer engines) -->
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 
     <meta name="generator" content={Astro.generator} />
     <link rel="stylesheet" href="/styles/global.css" />

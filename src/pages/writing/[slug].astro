@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../../layouts/Base.astro";
+import { getCollection } from 'astro:content';
+
+// On-site notes/articles that carry a body and no external url render here.
+export async function getStaticPaths() {
+  const entries = (await getCollection('writing')).filter(
+    (e) => !e.data.draft && !e.data.url
+  );
+  return entries.map((e) => ({ params: { slug: e.slug }, props: { entry: e } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const fmtDate = (d) =>
+  d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}` : '';
+const meta = [entry.data.source, fmtDate(entry.data.date)].filter(Boolean).join(' · ');
+
+const pageURL = new URL(`/writing/${entry.slug}/`, Astro.site).href;
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: entry.data.title,
+  description: entry.data.hook ?? entry.data.title,
+  ...(entry.data.date && { datePublished: entry.data.date.toISOString().slice(0, 10) }),
+  author: { '@type': 'Person', name: 'Debanjan Choudhury', url: 'https://theybanjan.com' },
+  publisher: { '@type': 'Person', name: 'Debanjan Choudhury' },
+  mainEntityOfPage: pageURL,
+  url: pageURL,
+  image: new URL('/og-image.png', Astro.site).href,
+  ...(entry.data.tags?.length && { keywords: entry.data.tags.join(', ') }),
+};
+---
+
+<BaseLayout
+  title={`${entry.data.title} — Debanjan`}
+  description={entry.data.hook ?? entry.data.title}
+  ogImage="/og-image.png"
+>
+  <div class="eyebrow">Writing{meta ? ` · ${meta}` : ''}</div>
+  <hr class="rule" />
+  <h1>{entry.data.title}</h1>
+
+  <article class="prose">
+    <Content />
+  </article>
+
+  <p class="linkline" style="margin-top:48px"><a href="/writing">← All writing</a></p>
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</BaseLayout>
+
+<style>
+  .prose :global(h2) { font-size: 1.35rem; margin-top: 32px; }
+  .prose :global(p) { max-width: 34em; }
+  .prose :global(ul) { max-width: 34em; }
+</style>

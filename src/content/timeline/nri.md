@@ -7,4 +7,4 @@ location: Kolkata, West Bengal, India
 stack: ["java", "spring", "mysql"]
 focus: ["data migration", "SSO", "access control"]
 ---
-Led client onboarding with data migration workflows and implemented Single Sign-On (SSO) for enhanced security and user management.
+Led pre-go-live client data migration to 100% post-migration reconciliation, and added Single Sign-On with automated user provisioning. Built an Apache Camel routing framework for business flows, and cut file-upload time ~60% with multithreading and caching.
