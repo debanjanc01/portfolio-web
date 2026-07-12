@@ -11,6 +11,7 @@ hook: "The message counts didn't add up. That was the real outage — we just co
 tags: [reliability, observability]
 order: 9
 draft: false
+featured: true
 ---
 
 An outbound platform fanned messages out across Email, SMS, App, and WhatsApp. The counts didn't reconcile: what we sent at the source didn't match what we could account for at the target. Somewhere between "queued" and "delivered," the numbers quietly diverged.

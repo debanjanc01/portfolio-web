@@ -4,6 +4,6 @@ kind: article
 source: SigNoz
 url: "https://signoz.io/blog/log-monitoring-tools/"
 tags: [observability, logs]
-featured: true
+featured: false
 order: 3
 ---

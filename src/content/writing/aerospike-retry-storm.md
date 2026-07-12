@@ -10,6 +10,7 @@ hook: "A single slow shard didn't take the system down. Our retries did."
 tags: [reliability, distributed-systems]
 order: 10
 draft: false
+featured: true
 ---
 
 The incident didn't start with an outage. It started with one Aerospike shard getting slow on a single hot key.

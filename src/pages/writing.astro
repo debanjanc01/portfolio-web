@@ -3,14 +3,17 @@ import BaseLayout from "../layouts/Base.astro";
 import { getCollection } from 'astro:content';
 
 const all = (await getCollection('writing')).filter((e) => !e.data.draft);
-const entries = all.sort((a, b) => {
+const byRecency = (a, b) => {
   const ad = a.data.date ? a.data.date.getTime() : 0;
   const bd = b.data.date ? b.data.date.getTime() : 0;
   if (ad !== bd) return bd - ad;
   return (b.data.order ?? 0) - (a.data.order ?? 0);
-});
+};
 
-const kinds = Array.from(new Set(entries.map((e) => e.data.kind)));
+const notes = all.filter((e) => e.data.kind === 'note').sort(byRecency);
+const external = all
+  .filter((e) => e.data.kind !== 'note')
+  .sort(byRecency);
 
 const fmtDate = (d?: Date) =>
   d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}` : '';
@@ -18,72 +21,61 @@ const fmtDate = (d?: Date) =>
 
 <BaseLayout
   title="Writing — Debanjan"
-  description="Selected writing and posts on backend systems, production failure, debugging, and engineering judgment."
+  description="Notes on production failure and observability, plus selected articles on monitoring tools."
 >
   <div class="eyebrow">Writing</div>
   <hr class="rule" />
   <h1>Writing</h1>
-  <p class="lede">Articles, posts, and notes on how backend systems behave, break, and get debugged — and the judgment behind the decisions.</p>
+  <p class="lede">Notes from production systems — how they fail, how you count what matters, and what the fix actually looked like. External articles below.</p>
 
-  {kinds.length > 1 && (
-    <div class="filters" role="group" aria-label="Filter writing by kind">
-      <button class="filter is-active" data-kind="all" type="button">all</button>
-      {kinds.map((k) => (
-        <button class="filter" data-kind={k} type="button">{k}</button>
-      ))}
-    </div>
+  {notes.length > 0 && (
+    <section class="section" style="margin-top:28px">
+      <div class="section-label">Notes</div>
+      <div class="posts">
+        {notes.map((e) => (
+          <a class="post-card" href={`/writing/${e.slug}`}>
+            <div class="post-head">
+              <span>note</span>
+              <span>{fmtDate(e.data.date)}</span>
+            </div>
+            <p style="margin:0 0 6px;color:var(--ink);font-weight:500">{e.data.title}</p>
+            {e.data.hook && <p class="post-hook">{e.data.hook}</p>}
+          </a>
+        ))}
+      </div>
+    </section>
   )}
 
-  <div class="rows" id="writing-rows" style="margin-top:18px">
-    {entries.map((e) => (
-      <div class="row writing-row" data-kind={e.data.kind}>
-        <span class="row-left">
-          <span class="tag">{e.data.kind}</span>
-          {e.data.url ? (
-            <a class="row-title" href={e.data.url} target="_blank" rel="noreferrer">{e.data.title}</a>
-          ) : (
-            <a class="row-title" href={`/writing/${e.slug}`}>{e.data.title}</a>
-          )}
-        </span>
-        <span class="row-meta">{[e.data.source, e.data.date ? fmtDate(e.data.date) : null].filter(Boolean).join(' · ')}</span>
+  {external.length > 0 && (
+    <section class="section">
+      <div class="section-label">Articles</div>
+      <div class="rows">
+        {external.map((e) => (
+          <div class="row">
+            <span class="row-left">
+              <span class="tag">{e.data.kind}</span>
+              {e.data.url ? (
+                <a class="row-title" href={e.data.url} target="_blank" rel="noreferrer">{e.data.title}</a>
+              ) : (
+                <a class="row-title" href={`/writing/${e.slug}`}>{e.data.title}</a>
+              )}
+            </span>
+            <span class="row-meta">{[e.data.source, e.data.date ? fmtDate(e.data.date) : null].filter(Boolean).join(' · ')}</span>
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
+    </section>
+  )}
 
   <p class="linkline" style="margin-top:40px">
-    Also writing at
+    <a href="/rss.xml">RSS</a>
+    · also at
     <a href="https://geekflare.com/author/debanjan/" target="_blank" rel="noreferrer">Geekflare</a>
   </p>
 </BaseLayout>
 
 <style>
-  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
-  .filter {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--ink-muted);
-    background: transparent;
-    border: 1px solid var(--hairline);
-    border-radius: 6px;
-    padding: 3px 10px;
-    cursor: pointer;
-    transition: color 0.18s ease, border-color 0.18s ease;
-  }
-  .filter:hover { color: var(--ink); border-color: var(--ink-muted); }
-  .filter.is-active { color: var(--paper); background: var(--ink); border-color: var(--ink); }
   .row-left { display: flex; align-items: baseline; min-width: 0; }
+  a.post-card { display: block; color: inherit; border: 0; text-decoration: none; }
+  a.post-card:hover { border-color: var(--ink-muted); }
 </style>
-
-<script>
-  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter');
-  const rows = document.querySelectorAll<HTMLElement>('.writing-row');
-  buttons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const kind = btn.dataset.kind;
-      buttons.forEach((b) => b.classList.toggle('is-active', b === btn));
-      rows.forEach((r) => {
-        r.style.display = kind === 'all' || r.dataset.kind === kind ? '' : 'none';
-      });
-    });
-  });
-</script>
