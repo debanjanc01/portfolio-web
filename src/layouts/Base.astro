@@ -1,4 +1,7 @@
 ---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+
 export interface Props {
   title?: string;
   description?: string;
@@ -12,6 +15,7 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site);
+const path = Astro.url.pathname;
 
 const personSchema = {
   '@context': 'https://schema.org',
@@ -34,13 +38,24 @@ const personSchema = {
     'https://x.com/theybanjan',
   ],
 };
+
+const navItems = [
+  { href: '/writing', label: 'writing', match: '/writing' },
+  { href: '/work', label: 'work', match: '/work' },
+  { href: '/about', label: 'about', match: '/about' },
+  { href: '/contact', label: 'contact', match: '/contact' },
+] as const;
+
+function isActive(match: string) {
+  return path === match || path.startsWith(match + '/');
+}
 ---
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Set theme before paint to avoid flash -->
+    <!-- Set theme before paint to avoid flash (re-runs on each full load) -->
     <script is:inline>
       (function () {
         try {
@@ -51,17 +66,14 @@ const personSchema = {
       })();
     </script>
 
+    <ClientRouter />
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
     <!-- SEO -->
     <title>{title}</title>
@@ -89,17 +101,19 @@ const personSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 
     <meta name="generator" content={Astro.generator} />
-    <link rel="stylesheet" href="/styles/global.css" />
   </head>
   <body>
     <header class="site-header">
       <a class="brand" href="/">Debanjan</a>
       <nav class="nav">
-        <a href="/writing">writing</a>
-        <a href="/work">work</a>
-        <a href="/about">about</a>
-        <a href="/now">now</a>
-        <a href="/contact">contact</a>
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.match) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" type="button">
           <svg id="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
             <circle cx="12" cy="12" r="5"/>
@@ -129,23 +143,31 @@ const personSchema = {
       </span>
     </footer>
 
+    <!-- Theme toggle: delegated click + page-load icon sync (survives ClientRouter swaps) -->
     <script is:inline>
       (function () {
-        var html = document.documentElement;
-        var btn = document.getElementById('theme-toggle');
-        var sun = document.getElementById('sun-icon');
-        var moon = document.getElementById('moon-icon');
-        function render(theme) {
+        function renderIcons() {
+          var sun = document.getElementById('sun-icon');
+          var moon = document.getElementById('moon-icon');
+          if (!sun || !moon) return;
+          var theme = document.documentElement.getAttribute('data-theme') || 'light';
           sun.style.display = theme === 'dark' ? 'block' : 'none';
           moon.style.display = theme === 'dark' ? 'none' : 'block';
         }
-        render(html.getAttribute('data-theme') || 'light');
-        btn.addEventListener('click', function () {
-          var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-          html.setAttribute('data-theme', next);
-          try { localStorage.setItem('theme', next); } catch (e) {}
-          render(next);
-        });
+        if (!window.__themeToggleBound) {
+          window.__themeToggleBound = true;
+          document.addEventListener('click', function (e) {
+            var btn = e.target && e.target.closest && e.target.closest('#theme-toggle');
+            if (!btn) return;
+            var html = document.documentElement;
+            var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            try { localStorage.setItem('theme', next); } catch (err) {}
+            renderIcons();
+          });
+          document.addEventListener('astro:page-load', renderIcons);
+        }
+        renderIcons();
       })();
     </script>
   </body>

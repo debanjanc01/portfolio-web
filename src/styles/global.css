@@ -1,10 +1,10 @@
 /* Editorial engineer — near-monochrome, light-first. See brand/visual.md */
 
 :root {
-  /* Type */
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  /* Type — system stack (zero font network requests) */
+  --font-display: Georgia, "Times New Roman", ui-serif, serif;
+  --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* Site — light (default reading surface) */
   --paper: #faf9f5;
@@ -107,16 +107,24 @@ body {
   color: var(--ink-muted);
   text-decoration: none;
   border-bottom: 1px solid transparent;
+  padding: 8px 0;
   transition: color 0.18s ease, border-color 0.18s ease;
 }
 .nav a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+.nav a[aria-current="page"],
+.nav a.is-active {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
 
 .theme-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  min-width: 40px;
+  min-height: 40px;
+  width: 40px;
+  height: 40px;
   padding: 0;
   background: transparent;
   border: 1px solid var(--hairline);
@@ -192,7 +200,7 @@ li { margin: 6px 0; }
 .hero { margin-top: 28px; }
 .hero h1 {
   font-size: clamp(2rem, 6vw, 2.65rem);
-  max-width: 16ch;
+  max-width: 22ch;
   margin: 0 0 18px;
 }
 .hero .lede {
@@ -334,7 +342,7 @@ li { margin: 6px 0; }
   .nav {
     width: 100%;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: 10px 14px;
     justify-content: flex-start;
   }
 }
