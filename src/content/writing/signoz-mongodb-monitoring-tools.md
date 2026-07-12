@@ -4,6 +4,6 @@ kind: article
 source: SigNoz
 url: "https://signoz.io/blog/mongodb-monitoring-tools/"
 tags: [observability, databases]
-featured: true
+featured: false
 order: 2
 ---

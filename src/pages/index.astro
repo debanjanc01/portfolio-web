@@ -1,32 +1,15 @@
 ---
 import BaseLayout from "../layouts/Base.astro";
-import Figure from "../components/Figure.astro";
 import { getCollection } from 'astro:content';
 
-const published = (await getCollection('writing')).filter((e) => !e.data.draft);
-
-const selectedWork = (await getCollection('work'))
-  .filter((e) => !e.data.draft)
-  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))
-  .slice(0, 2);
-
-const byRecency = (a, b) => {
-  const ad = a.data.date ? a.data.date.getTime() : 0;
-  const bd = b.data.date ? b.data.date.getTime() : 0;
-  if (ad !== bd) return bd - ad;
-  return (b.data.order ?? 0) - (a.data.order ?? 0);
-};
-
-const recentWriting = published
-  .filter((e) => e.data.kind === 'article' || e.data.kind === 'note')
-  .sort(byRecency)
-  .slice(0, 4);
-
-// Posts only render with a real permalink; no profile fallbacks, no ghost links.
-const selectedPosts = published
-  .filter((e) => e.data.kind === 'post' && e.data.featured && e.data.url)
-  .sort(byRecency)
-  .slice(0, 3);
+const notes = (await getCollection('writing'))
+  .filter((e) => !e.data.draft && e.data.kind === 'note' && !e.data.url)
+  .sort((a, b) => {
+    const ad = a.data.date ? a.data.date.getTime() : 0;
+    const bd = b.data.date ? b.data.date.getTime() : 0;
+    if (ad !== bd) return bd - ad;
+    return (b.data.order ?? 0) - (a.data.order ?? 0);
+  });
 
 const fmtDate = (d) =>
   d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}` : '';
@@ -34,98 +17,51 @@ const fmtDate = (d) =>
 
 <BaseLayout
   title="Debanjan — Senior Software Engineer"
-  description="Senior software engineer, 8+ yrs. How real systems behave, break, and get debugged, plus the judgment that isn't in the code."
+  description="Senior software engineer at Apollo.io. Backend systems, production reliability, and writing about how designs behave after they ship."
   ogImage="/og-image.png"
 >
   <section class="hero">
-    <div class="eyebrow">Senior software engineer · 8+ yrs</div>
-    <hr class="rule" />
-    <h1>I build and operate backend systems, and write about how they behave when they break.</h1>
-    <p class="lede">Production is where a design becomes visible. I work on email deliverability and sequences at Apollo.io, and write about the engineering judgment that isn't in the code.</p>
-
-    <Figure variant="console" caption="fig.1 — retry storm · aerospike incident">
-      <svg viewBox="0 0 536 178" role="img" aria-label="Clients retry a timing-out shard in lockstep, amplifying load; fixed with backoff and jitter">
-        <defs>
-          <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#7a8499" stroke-width="1.3"/></marker>
-          <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#ef5b6b" stroke-width="1.3"/></marker>
-        </defs>
-        <text x="0" y="12" font-family="JetBrains Mono, monospace" font-size="11" fill="#2dd4bf">fix</text>
-        <text x="30" y="12" font-family="Inter, sans-serif" font-size="12.5" fill="#cfe9e4">skip bad keys, then add backoff + jitter to desync the herd</text>
-        <line x1="0" y1="24" x2="536" y2="24" stroke="#1e2940" stroke-width="1"/>
-        <rect x="2" y="54" width="118" height="54" rx="13" fill="#121b30" stroke="#2c3a57"/>
-        <text x="61" y="77" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" font-weight="500" fill="#eef2f8">clients</text>
-        <text x="61" y="94" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#97a1b4">retry on timeout</text>
-        <rect x="209" y="54" width="118" height="54" rx="13" fill="#121b30" stroke="#2c3a57"/>
-        <text x="268" y="77" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" font-weight="500" fill="#eef2f8">worker</text>
-        <text x="268" y="94" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#97a1b4">reads key X</text>
-        <rect x="416" y="54" width="120" height="54" rx="13" fill="#1c1320" stroke="#ef5b6b"/>
-        <text x="476" y="77" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" font-weight="500" fill="#ef5b6b">shard · key X</text>
-        <text x="476" y="94" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#ef8a96">timing out</text>
-        <line x1="120" y1="81" x2="205" y2="81" stroke="#7a8499" stroke-width="1.4" marker-end="url(#ar)"/>
-        <line x1="327" y1="81" x2="412" y2="81" stroke="#7a8499" stroke-width="1.4" marker-end="url(#ar)"/>
-        <path d="M476,108 C476,150 61,150 61,112" fill="none" stroke="#ef5b6b" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arR)"/>
-        <text x="268" y="172" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#ef8a96">synchronized retries amplify load</text>
-      </svg>
-    </Figure>
+    <h1>I build backend systems that stay honest under load.</h1>
+    <p class="lede">Production is where a design becomes visible. I work on email deliverability and sequences at Apollo.io, and write about failures, observability, and the operational judgment that keeps systems trustworthy.</p>
   </section>
 
-  <section class="section">
-    <div class="section-label">Recent writing</div>
-    <div class="rows">
-      {recentWriting.map((w) => (
-        <div class="row">
-          {w.data.url ? (
-            <a class="row-title" href={w.data.url} target="_blank" rel="noreferrer">{w.data.title}</a>
-          ) : (
-            <a class="row-title" href={`/writing/${w.slug}`}>{w.data.title}</a>
-          )}
-          <span class="row-meta">{[w.data.source, w.data.date ? fmtDate(w.data.date) : null].filter(Boolean).join(' · ')}</span>
-        </div>
-      ))}
-    </div>
-    <p style="margin-top:14px"><a href="/writing">All writing →</a></p>
-  </section>
-
-  {selectedWork.length > 0 && (
+  {notes.length > 0 && (
     <section class="section">
-      <div class="section-label">Selected work</div>
-      <div class="rows">
-        {selectedWork.map((w) => (
-          <div class="row">
-            {w.data.repo ? (
-              <a class="row-title" href={w.data.repo} target="_blank" rel="noreferrer">{w.data.title}</a>
-            ) : (
-              <a class="row-title" href="/work">{w.data.title}</a>
-            )}
-            <span class="row-meta">{w.data.summary}</span>
-          </div>
-        ))}
-      </div>
-      <p style="margin-top:14px"><a href="/work">All work →</a></p>
-    </section>
-  )}
-
-  {selectedPosts.length > 0 && (
-    <section class="section">
-      <div class="section-label">Selected posts</div>
+      <div class="section-label">Writing</div>
       <div class="posts">
-        {selectedPosts.map((p) => (
-          <a class="post-card" href={p.data.url} target="_blank" rel="noreferrer">
-            <div class="post-head"><span>{p.data.source}</span><span>{fmtDate(p.data.date)}</span></div>
-            <p class="post-hook">{p.data.hook ?? p.data.title}</p>
+        {notes.map((n) => (
+          <a class="post-card" href={`/writing/${n.slug}`}>
+            <div class="post-head">
+              <span>note</span>
+              <span>{fmtDate(n.data.date)}</span>
+            </div>
+            <p style="margin:0 0 6px;color:var(--ink);font-weight:500">{n.data.title}</p>
+            {n.data.hook && <p class="post-hook">{n.data.hook}</p>}
           </a>
         ))}
       </div>
+      <p style="margin-top:14px"><a href="/writing">All writing →</a></p>
     </section>
   )}
 
   <section class="section">
-    <div class="section-label">Elsewhere</div>
+    <div class="section-label">Proof</div>
+    <p style="max-width:36em;margin:0">
+      At Snapdeal: 100% source-to-target message accounting, ~21% AWS cost cut, WhatsApp bot-of-bots redesign, SonarQube +78%.
+      Notes on <a href="/writing/message-accounting">counting messages</a> and <a href="/writing/aerospike-retry-storm">retry storms</a> — full path on the <a href="/timeline">timeline</a>.
+    </p>
+  </section>
+
+  <section class="section">
     <p class="linkline">
-      <a href="https://github.com/debanjanc01" target="_blank" rel="noreferrer">github</a> ·
-      <a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">linkedin</a> ·
-      <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">x</a> ·
-      <a href="mailto:debanjanc01@gmail.com">email</a>
+      <a href="mailto:debanjanc01@gmail.com">debanjanc01@gmail.com</a>
+      · <a href="/writing">writing</a>
+      · <a href="/contact">contact</a>
     </p>
   </section>
 </BaseLayout>
+
+<style>
+  a.post-card { display: block; color: inherit; border: 0; text-decoration: none; }
+  a.post-card:hover { border-color: var(--ink-muted); }
+</style>
