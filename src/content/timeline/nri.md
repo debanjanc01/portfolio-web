@@ -7,4 +7,7 @@ location: Kolkata, West Bengal, India
 stack: ["java", "spring", "mysql"]
 focus: ["data migration", "SSO", "access control"]
 ---
-Led pre-go-live client data migration to 100% post-migration reconciliation, and added Single Sign-On with automated user provisioning. Built an Apache Camel routing framework for business flows, and cut file-upload time ~60% with multithreading and caching.
+
+Pre-go-live client data migration. The only acceptable end state was 100% reconciliation after the move. That is what we hit.
+
+I also added Single Sign-On with automated user provisioning, built an Apache Camel routing layer for business flows, and cut file-upload time about 60% with multithreading and caching.

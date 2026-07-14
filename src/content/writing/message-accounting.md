@@ -1,33 +1,31 @@
 ---
-# Drafted from a documented résumé achievement: "Enhanced the outbound
-# communication platform ... segregating logged metrics, and eliminating false
-# request drops, leading to a 100% accounting of message counts from source to
-# target." Verify framing/numbers before relying on it; set draft:false to keep
-# published (it already builds).
 title: "You can't operate what you can't count"
 kind: note
+mode: dive
 date: 2026-06-13
-hook: "The message counts didn't add up. That was the real outage — we just couldn't see it yet."
+hook: "The message counts did not add up. That was the outage. We just could not see it yet."
 tags: [reliability, observability]
 order: 9
 draft: false
 featured: true
 ---
 
-An outbound platform fanned messages out across Email, SMS, App, and WhatsApp. The counts didn't reconcile: what we sent at the source didn't match what we could account for at the target. Somewhere between "queued" and "delivered," the numbers quietly diverged.
+We ran an outbound platform across Email, SMS, App, and WhatsApp. What we sent at the source did not match what we could account for at the target. Between "queued" and "delivered," the numbers quietly drifted.
 
-That gap is more dangerous than it looks. When your delivery numbers and your *logged* numbers disagree, you can't tell a real delivery failure from a logging artifact — so every investigation starts by debating which layer is even lying. You end up debugging the instrument instead of the system.
+That gap is worse than it looks. When delivery numbers and logged numbers disagree, you cannot tell a real failure from a logging artifact. Every investigation starts with an argument about which layer is lying. You debug the instrument instead of the system.
 
 ## What the work actually was
 
-Not a rewrite. It was making the numbers trustworthy:
+Not a rewrite. Making the numbers trustworthy.
 
-- **Segregate the metrics by stage** so every hop in the pipeline is counted independently, instead of one aggregate number that hides where it breaks.
-- **Find the gaps** where the count diverged, hop by hop.
-- **Eliminate the false drops** — requests logged as failures that had actually been delivered. Those were poisoning the signal.
+- Count each stage on its own so one aggregate cannot hide the break.
+- Walk the hops until you find where the count diverges.
+- Kill false drops: requests logged as failures that had already been delivered. Those poison every signal.
 
-The result was 100% accounting of message counts from source to target: a number you could actually stand behind.
+We got to 100% accounting of message counts from source to target. A number you could defend.
 
-## The lesson I keep
+## What I still believe
 
-Observability isn't dashboards — it's *trustworthy counts*. A metric you don't trust is worse than no metric, because it sends you to debug the wrong layer with confidence. Before you optimize a pipeline, make it auditable: if you can't say where each message went, you're not operating the system, you're hoping.
+Observability is not a wall of dashboards. It is counts you can trust. A metric you do not believe is worse than no metric. It sends you to the wrong layer with confidence.
+
+Before you optimize a pipeline, make it auditable. If you cannot say where each message went, you are not operating the system. You are hoping.

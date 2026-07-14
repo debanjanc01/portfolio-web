@@ -1,9 +1,13 @@
 ---
 import BaseLayout from "../layouts/Base.astro";
 import { getCollection } from 'astro:content';
+import { selectHomeNotes } from '../lib/selectHomeNotes.js';
 
-const notes = (await getCollection('writing'))
-  .filter((e) => !e.data.draft && e.data.kind === 'note' && !e.data.url)
+const allNotes = (await getCollection('writing'))
+  .filter((e) => !e.data.draft && e.data.kind === 'note' && !e.data.url);
+
+const featured = allNotes
+  .filter((e) => e.data.featured)
   .sort((a, b) => {
     const ad = a.data.date ? a.data.date.getTime() : 0;
     const bd = b.data.date ? b.data.date.getTime() : 0;
@@ -11,28 +15,65 @@ const notes = (await getCollection('writing'))
     return (b.data.order ?? 0) - (a.data.order ?? 0);
   });
 
+const notes = selectHomeNotes(featured.length ? featured : allNotes);
+
+const modeLabel = (mode) => {
+  const map = {
+    dive: 'deep dive',
+    lesson: 'lesson',
+    career: 'career',
+    human: 'human',
+    philosophy: 'philosophy',
+    building: 'building',
+  };
+  return mode ? map[mode] ?? mode : 'note';
+};
+
 const fmtDate = (d) =>
   d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}` : '';
 ---
 
 <BaseLayout
-  title="Debanjan — Senior Software Engineer"
-  description="Senior software engineer at Apollo.io. Backend systems, production reliability, and writing about how designs behave after they ship."
+  title="Debanjan - Senior Software Engineer"
+  description="I write about what happens after the design ships: bad retries, bad metrics, bad habits. Backend engineer, 8+ years. @theybanjan"
   ogImage="/og-image.png"
 >
   <section class="hero">
-    <h1>I build backend systems that stay honest under load.</h1>
-    <p class="lede">Production is where a design becomes visible. I work on email deliverability and sequences at Apollo.io, and write about failures, observability, and the operational judgment that keeps systems trustworthy.</p>
+    <h1>Most designs die after they ship.</h1>
+    <p class="lede">
+      Not in a meeting. In production. Under retries, bad counts, and people who are tired.
+      I care about that part. The part where a system either stays honest or slowly starts lying.
+    </p>
+    <p class="lede lede-soft">
+      I'm Debanjan. Senior engineer, 8+ years in backends. Right now I work on email deliverability and sequences at Apollo.io.
+      Here I write the long form: outages, early-career mistakes, calm under pressure, and why building still matters.
+    </p>
+
+    <div class="path-row" aria-label="Primary paths">
+      <a class="path-primary" href="/writing">Start with a note →</a>
+      <span class="path-sep" aria-hidden="true">·</span>
+      <a href="/work">Work</a>
+      <span class="path-sep" aria-hidden="true">·</span>
+      <a href="/about">About</a>
+      <span class="path-sep" aria-hidden="true">·</span>
+      <a href="/contact">Contact</a>
+    </div>
+    <p class="follow-reason">
+      Shorter thoughts, same obsessions:
+      <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a>.
+      Production scars, career questions, how to keep building without becoming a hero cosplay.
+    </p>
   </section>
 
   {notes.length > 0 && (
     <section class="section">
-      <div class="section-label">Writing</div>
+      <div class="section-label">Selected writing</div>
+      <p class="section-intro">Outages next to people stuff. That's the job.</p>
       <div class="posts">
         {notes.map((n) => (
           <a class="post-card" href={`/writing/${n.slug}`}>
             <div class="post-head">
-              <span>note</span>
+              <span>{modeLabel(n.data.mode)}</span>
               <span>{fmtDate(n.data.date)}</span>
             </div>
             <p style="margin:0 0 6px;color:var(--ink);font-weight:500">{n.data.title}</p>
@@ -45,18 +86,30 @@ const fmtDate = (d) =>
   )}
 
   <section class="section">
-    <div class="section-label">Proof</div>
-    <p style="max-width:36em;margin:0">
-      At Snapdeal: 100% source-to-target message accounting, ~21% AWS cost cut, WhatsApp bot-of-bots redesign, SonarQube +78%.
-      Notes on <a href="/writing/message-accounting">counting messages</a> and <a href="/writing/aerospike-retry-storm">retry storms</a> — full path on the <a href="/timeline">timeline</a>.
+    <div class="section-label">Things that actually happened</div>
+    <p class="proof-line">
+      At Snapdeal I drove <strong>100% source-to-target message accounting</strong>, cut AWS cost about 21%,
+      redesigned WhatsApp as a bot-of-bots, and lifted SonarQube quality scores 78%.
+      Writeups on <a href="/writing/message-accounting">counting messages</a> and
+      <a href="/writing/aerospike-retry-storm">retry storms</a>. Full path on the
+      <a href="/timeline">timeline</a>.
     </p>
   </section>
 
-  <section class="section">
-    <p class="linkline">
-      <a href="mailto:debanjanc01@gmail.com">debanjanc01@gmail.com</a>
-      · <a href="/writing">writing</a>
-      · <a href="/contact">contact</a>
+  <section class="section section-compact">
+    <div class="section-label">Also here</div>
+    <p class="elsewhere">
+      <a href="/work">Work</a> (cases)
+      <span class="path-sep">·</span>
+      <a href="/timeline">Timeline</a>
+      <span class="path-sep">·</span>
+      <a href="/now">Now</a>
+      <span class="path-sep">·</span>
+      <a href="/about">About</a>
+      <span class="path-sep">·</span>
+      <a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">LinkedIn</a>
+      <span class="path-sep">·</span>
+      <a href="mailto:debanjanc01@gmail.com">Email</a>
     </p>
   </section>
 </BaseLayout>
@@ -64,4 +117,39 @@ const fmtDate = (d) =>
 <style>
   a.post-card { display: block; color: inherit; border: 0; text-decoration: none; }
   a.post-card:hover { border-color: var(--ink-muted); }
+  .lede-soft {
+    margin-top: -8px;
+    font-size: 1.02rem;
+    color: var(--ink-muted);
+  }
+  .section-intro {
+    margin: 0 0 14px;
+    max-width: 36em;
+    font-size: 0.95rem;
+    color: var(--ink-muted);
+  }
+  .proof-line {
+    max-width: 36em;
+    margin: 0;
+  }
+  .proof-line strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .section-compact { margin-top: 40px; }
+  .elsewhere {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.8;
+  }
+  .elsewhere a {
+    color: var(--ink-body);
+    border: 0;
+  }
+  .elsewhere a:hover {
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
 </style>

@@ -8,8 +8,8 @@ export interface Props {
   ogImage?: string;
 }
 const {
-  title = 'Debanjan — Senior Software Engineer',
-  description = 'Senior software engineer at Apollo.io. Backend systems, production reliability, and writing about how designs behave after they ship.',
+  title = 'Debanjan - Senior Software Engineer',
+  description = 'I write about what happens after the design ships: bad retries, bad metrics, bad habits. Backend engineer, 8+ years.',
   ogImage = '/og-image.png'
 } = Astro.props as Props;
 
@@ -43,6 +43,7 @@ const navItems = [
   { href: '/writing', label: 'writing', match: '/writing' },
   { href: '/work', label: 'work', match: '/work' },
   { href: '/about', label: 'about', match: '/about' },
+  { href: '/now', label: 'now', match: '/now' },
   { href: '/contact', label: 'contact', match: '/contact' },
 ] as const;
 
@@ -79,7 +80,7 @@ function isActive(match: string) {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
-    <link rel="alternate" type="application/rss+xml" title="Debanjan — Writing" href={new URL('/rss.xml', Astro.site)} />
+    <link rel="alternate" type="application/rss+xml" title="Debanjan - Writing" href={new URL('/rss.xml', Astro.site)} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -97,7 +98,7 @@ function isActive(match: string) {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 
-    <!-- Structured data (Person — entity for search + answer engines) -->
+    <!-- Structured data (Person schema for search + answer engines) -->
     <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 
     <meta name="generator" content={Astro.generator} />
@@ -137,9 +138,9 @@ function isActive(match: string) {
       <span>© {new Date().getFullYear()} Debanjan</span>
       <span>
         <a href="/timeline">Timeline</a> ·
-        <a href="https://github.com/debanjanc01" target="_blank" rel="noreferrer">GitHub</a> ·
+        <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a> ·
         <a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">LinkedIn</a> ·
-        <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">X</a>
+        <a href="https://github.com/debanjanc01" target="_blank" rel="noreferrer">GitHub</a>
       </span>
     </footer>
 

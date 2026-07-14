@@ -3,42 +3,46 @@ import BaseLayout from "../layouts/Base.astro";
 ---
 
 <BaseLayout
-  title="About — Debanjan"
-  description="Senior software engineer building and operating backend systems. Production experience and engineering judgment under real load."
+  title="About - Debanjan"
+  description="Backend engineer with 8+ years. I care about systems that stay honest after they ship, and the people who have to run them."
   ogImage="/og-image.png"
 >
   <div class="eyebrow">About</div>
   <hr class="rule" />
   <h1>About</h1>
-  <p class="lede">Senior software engineer with 8+ years building and operating backend systems. Currently on email deliverability and sequences at Apollo.io.</p>
+  <p class="lede">I got good at engineering by breaking things and staying long enough to fix them properly. Eight-plus years of backends later, I still think the interesting work starts after the demo.</p>
 
   <h2>What I do</h2>
-  <p>I build reliable services with clear contracts, strong observability, and practical tooling. My focus is production systems: how they work, how they fail, and how to debug them. Most of what I find worth writing about lives after a design leaves the whiteboard — under retries, overload, concurrency, and partial failure.</p>
+  <p>I build services with clear contracts and boring, trustworthy telemetry. Right now that's email deliverability and sequences at Apollo.io. Before that, messaging and notifications at Snapdeal: counts that had to match, cost that had to come down, bots that had to stop being a mess.</p>
+  <p>I write about the same world. Retries that stampede. Metrics you can't trust. The human side of a page. Questions that make you less junior. Why any of this is worth the cost.</p>
 
   <h2>How I think about the work</h2>
-  <p>Seniority shows up in anticipated consequences, not in knowing more patterns. The questions that matter are usually about what happens twice, late, partially, or during recovery — and whether a technically valid design is still operationally responsible.</p>
-  <p>The work is also not purely technical. Staying calm and structured during an incident, communicating risk before it becomes a surprise, writing documents that age well, and mentoring people earlier in the path are part of how engineering judgment becomes useful to a team.</p>
+  <p>Seniority is not a bigger pattern catalog. It's seeing what happens twice, late, partially, or during recovery, before it hits someone at 3 a.m.</p>
+  <p>It's also how you show up. Calm when the room wants a hero. Risk said early. Docs that still make sense next year. Time spent with people earlier on the path.</p>
 
   <h2>Focus</h2>
   <ul>
-    <li><strong>APIs &amp; services</strong> — contracts, performance, migrations</li>
-    <li><strong>Reliability &amp; observability</strong> — SLOs, metrics, logs, traces</li>
-    <li><strong>Data systems</strong> — PostgreSQL, MongoDB, Elasticsearch, Kafka</li>
+    <li><strong>APIs and services:</strong> contracts, performance, migrations</li>
+    <li><strong>Reliability and observability:</strong> SLOs, metrics, logs, traces</li>
+    <li><strong>Data systems:</strong> PostgreSQL, MongoDB, Elasticsearch, Kafka</li>
   </ul>
 
   <h2>Stack</h2>
-  <p>Ruby, Go, Java, Python · PostgreSQL, MongoDB, Redis, Aerospike, Kafka, Kubernetes · Prometheus, Grafana, Datadog, OpenTelemetry</p>
+  <p>Ruby, Go, Java, Python. PostgreSQL, MongoDB, Redis, Aerospike, Kafka, Kubernetes. Prometheus, Grafana, Datadog, OpenTelemetry.</p>
 
-  <h2>Principles</h2>
+  <h2>Principles I actually use</h2>
   <ul>
     <li>Design for on-call: idempotency, backpressure, timeouts</li>
-    <li>Measure impact and make it observable</li>
-    <li>Prefer small, reversible steps</li>
+    <li>If you can't count it cleanly, you can't operate it</li>
+    <li>Small reversible steps beat clever rewrites</li>
+    <li>Leave the next human better notes than you got</li>
   </ul>
 
   <p class="linkline" style="margin-top:40px">
-    <a href="/timeline">career timeline →</a> ·
+    <a href="/timeline">timeline →</a> ·
     <a href="/work">work →</a> ·
-    <a href="/now">now →</a>
+    <a href="/now">now →</a> ·
+    <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a> ·
+    <a href="/writing">writing →</a>
   </p>
 </BaseLayout>

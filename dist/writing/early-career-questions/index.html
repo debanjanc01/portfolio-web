@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><!-- Set theme before paint to avoid flash (re-runs on each full load) --><script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CGSFs2wN.js"></script><!-- Favicon --><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><!-- SEO --><title>The questions that made me less junior - Debanjan</title><meta name="description" content="I stopped asking only 'does it work?' and started asking what happens twice, late, and when it fails halfway."><link rel="canonical" href="https://theybanjan.com/writing/early-career-questions/"><link rel="alternate" type="application/rss+xml" title="Debanjan - Writing" href="https://theybanjan.com/rss.xml"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://theybanjan.com/writing/early-career-questions/"><meta property="og:title" content="The questions that made me less junior - Debanjan"><meta property="og:description" content="I stopped asking only 'does it work?' and started asking what happens twice, late, and when it fails halfway."><meta property="og:image" content="https://theybanjan.com/og-image.png"><meta property="og:site_name" content="Debanjan"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@theybanjan"><meta name="twitter:creator" content="@theybanjan"><meta name="twitter:title" content="The questions that made me less junior - Debanjan"><meta name="twitter:description" content="I stopped asking only 'does it work?' and started asking what happens twice, late, and when it fails halfway."><meta name="twitter:image" content="https://theybanjan.com/og-image.png"><!-- Structured data (Person schema for search + answer engines) --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Debanjan Choudhury","alternateName":"Debanjan","url":"https://theybanjan.com","jobTitle":"Senior Software Engineer","worksFor":{"@type":"Organization","name":"Apollo.io"},"knowsAbout":["Backend systems","Distributed systems","Email deliverability","Reliability engineering","Observability"],"sameAs":["https://github.com/debanjanc01","https://www.linkedin.com/in/debanjanc01","https://x.com/theybanjan"]}</script><meta name="generator" content="Astro v5.13.5"><link rel="stylesheet" href="/_astro/about.xZrpiCgK.css">
+<style>.prose[data-astro-cid-jxnjfbl4] h2{font-size:1.35rem;margin-top:32px}.prose[data-astro-cid-jxnjfbl4] p,.prose[data-astro-cid-jxnjfbl4] ul{max-width:34em}
+</style><script type="module" src="/_astro/page.VIllvXJD.js"></script></head> <body> <header class="site-header"> <a class="brand" href="/">Debanjan</a> <nav class="nav"> <a href="/writing" aria-current="page"> writing </a><a href="/work"> work </a><a href="/about"> about </a><a href="/now"> now </a><a href="/contact"> contact </a> <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" type="button"> <svg id="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> <svg id="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </button> </nav> </header> <main class="container">  <div class="eyebrow" data-astro-cid-jxnjfbl4>Writing · 2026-07</div> <hr class="rule" data-astro-cid-jxnjfbl4> <h1 data-astro-cid-jxnjfbl4>The questions that made me less junior</h1> <article class="prose" data-astro-cid-jxnjfbl4> <p>Early on I optimized for looking smart in design review. Name the pattern. Sketch the happy path. Get the merge.</p>
+<p>I was not missing more patterns. I was missing better questions. The ones seniors ask quietly while juniors are still defending the diagram.</p>
+<h2 id="the-questions-that-changed-my-work">The questions that changed my work</h2>
+<p>I still use these. Not as theater. As a way to catch designs that look finished on the whiteboard and dangerous after they ship.</p>
+<ul>
+<li><strong>What happens twice?</strong> Retries, double clicks, redelivery, two workers on the same job. If you need exactly once, say so and prove it.</li>
+<li><strong>What happens late?</strong> Backfill, delayed jobs, clock skew, a consumer that was down for an hour. Does the system converge, or invent ghosts?</li>
+<li><strong>What happens partially?</strong> Half the replicas updated. Write succeeded, side effect did not. User saw success, ledger did not.</li>
+<li><strong>Who pays when this is wrong?</strong> On-call, support, the junior who inherits the code, the customer who stops trusting the product. If the answer is “someone else,” the design is incomplete.</li>
+<li><strong>How will we know?</strong> Not “we’ll add metrics later.” Which count, at which stage, would make a lie visible in week one?</li>
+</ul>
+<h2 id="what-i-wish-id-known-earlier">What I wish I’d known earlier</h2>
+<p>Speed without those questions is not senior speed. It is debt with a demo.</p>
+<p>Looking clever in a meeting is cheap. Being able to explain the system after a bad Tuesday is expensive. That is the job.</p>
+<p>If you are early: you do not need permission to ask these in review. Ask them about your own designs first. Write the answers down. That habit compounds faster than any framework tutorial.</p>
+<h2 id="what-i-still-believe">What I still believe</h2>
+<p>Growth is less about collecting tools and more about expanding the failure modes you refuse to hand-wave. The whiteboard is where a design looks finished. Production is where it becomes visible, including the parts of you that wanted to ship before you were ready to operate.</p> </article> <p class="linkline" style="margin-top:48px" data-astro-cid-jxnjfbl4> <a href="/writing" data-astro-cid-jxnjfbl4>More writing →</a>
+· <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer" data-astro-cid-jxnjfbl4>@theybanjan</a>
+· <a href="mailto:debanjanc01@gmail.com" data-astro-cid-jxnjfbl4>email</a> </p> <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"The questions that made me less junior","description":"I stopped asking only 'does it work?' and started asking what happens twice, late, and when it fails halfway.","datePublished":"2026-07-08","author":{"@type":"Person","name":"Debanjan Choudhury","url":"https://theybanjan.com"},"publisher":{"@type":"Person","name":"Debanjan Choudhury"},"mainEntityOfPage":"https://theybanjan.com/writing/early-career-questions/","url":"https://theybanjan.com/writing/early-career-questions/","image":"https://theybanjan.com/og-image.png","keywords":"early-career, design-review, judgment"}</script>  </main> <footer class="site-footer"> <span>© 2026 Debanjan</span> <span> <a href="/timeline">Timeline</a> ·
+<a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a> ·
+<a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">LinkedIn</a> ·
+<a href="https://github.com/debanjanc01" target="_blank" rel="noreferrer">GitHub</a> </span> </footer> <!-- Theme toggle: delegated click + page-load icon sync (survives ClientRouter swaps) --> <script>
+      (function () {
+        function renderIcons() {
+          var sun = document.getElementById('sun-icon');
+          var moon = document.getElementById('moon-icon');
+          if (!sun || !moon) return;
+          var theme = document.documentElement.getAttribute('data-theme') || 'light';
+          sun.style.display = theme === 'dark' ? 'block' : 'none';
+          moon.style.display = theme === 'dark' ? 'none' : 'block';
+        }
+        if (!window.__themeToggleBound) {
+          window.__themeToggleBound = true;
+          document.addEventListener('click', function (e) {
+            var btn = e.target && e.target.closest && e.target.closest('#theme-toggle');
+            if (!btn) return;
+            var html = document.documentElement;
+            var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            try { localStorage.setItem('theme', next); } catch (err) {}
+            renderIcons();
+          });
+          document.addEventListener('astro:page-load', renderIcons);
+        }
+        renderIcons();
+      })();
+    </script> </body> </html> 

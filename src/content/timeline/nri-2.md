@@ -7,4 +7,7 @@ location: Kolkata, West Bengal, India
 stack: ["java", "solr"]
 focus: ["reconciliation", "reporting", "global delivery"]
 ---
-Designed the End-of-Day reconciliation process on Apache Solr, eliminating manual sanity checks, and built a batch pipeline for intraday market-risk reports — refactoring legacy report generation for a ~35% speedup. Worked with the Global Delivery team for the Australian market.
+
+End-of-day reconciliation used to mean manual sanity checks. I moved it onto Apache Solr so the process could stand on its own.
+
+I also built a batch pipeline for intraday market-risk reports and reworked legacy report generation for about a 35% speedup. Worked with the Global Delivery team for the Australian market.

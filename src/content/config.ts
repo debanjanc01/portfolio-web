@@ -13,14 +13,18 @@ const timeline = defineCollection({
   }),
 });
 
-// Writing: articles + posts (link out) and, later, on-site notes (with a body).
-// A `post` MUST carry a real permalink — no profile fallbacks. Entries without
-// a real url should stay draft so nothing ghost-links.
+// Writing: on-site notes (body, no url) and external articles/posts (url).
+// mode labels the pillar so home/writing can mix systems with human substance.
+// A `post` MUST carry a real permalink — no profile fallbacks.
 const writing = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
     kind: z.enum(['article', 'post', 'note']).default('article'),
+    /** Pillar label for cards and selected mixes. External listicles use article. */
+    mode: z
+      .enum(['dive', 'lesson', 'career', 'human', 'philosophy', 'building'])
+      .optional(),
     source: z.string().optional(), // SigNoz, Geekflare, LinkedIn, X, ...
     url: z.string().url().optional(), // required for article/post; omit for on-site note
     date: z.date().optional(),

@@ -199,17 +199,59 @@ li { margin: 6px 0; }
 /* Hero */
 .hero { margin-top: 28px; }
 .hero h1 {
-  font-size: clamp(2rem, 6vw, 2.65rem);
-  max-width: 22ch;
+  font-size: clamp(1.9rem, 5.5vw, 2.55rem);
+  max-width: 16ch;
   margin: 0 0 18px;
 }
 .hero .lede {
   font-size: 1.12rem;
   color: var(--ink-body);
   line-height: 1.72;
-  max-width: 32em;
-  margin: 0 0 40px;
+  max-width: 34em;
+  margin: 0 0 16px;
 }
+
+/* Primary path row (home) — hierarchy without banner noise */
+.path-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin: 0 0 12px;
+}
+.path-row a {
+  color: var(--ink-body);
+  border: 0;
+}
+.path-row a:hover {
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.path-row .path-primary {
+  color: var(--ink);
+  font-weight: 600;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 1px;
+}
+.path-row .path-primary:hover {
+  border-bottom-color: var(--ink);
+}
+.path-sep { color: var(--ink-muted); user-select: none; }
+.follow-reason {
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+  max-width: 34em;
+  margin: 0 0 8px;
+  line-height: 1.65;
+}
+.follow-reason a {
+  color: var(--ink-body);
+  border-bottom-color: var(--hairline);
+}
+.follow-reason a:hover { border-bottom-color: var(--ink); }
 
 /* Figure — paper-native (default) */
 .figure { margin: 32px 0; max-width: 560px; }

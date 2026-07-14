@@ -7,4 +7,7 @@ location: Gurugram, Haryana, India
 stack: ["java", "spring boot", "kafka", "redis"]
 focus: ["chatbot", "notifications", "experimentation"]
 ---
-Built a shared library for WhatsApp Business API across vendors to cut duplication, and a Kafka-based integration-test framework wired into GitLab CI/CD to catch regressions on merge. Refactored the alerting framework to support custom Influx and Prometheus alerts.
+
+I got tired of every WhatsApp vendor needing its own snowflake code. So I built a shared library for the WhatsApp Business API and put the common path in one place.
+
+I also wired a Kafka integration-test framework into GitLab CI so regressions showed up on merge, not in production. Refactored alerting so we could run custom Influx and Prometheus rules without fighting the old framework every time.

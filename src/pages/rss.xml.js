@@ -16,9 +16,9 @@ export async function GET(context) {
     .sort((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0));
 
   return rss({
-    title: 'Debanjan — Writing',
+    title: 'Debanjan - Writing',
     description:
-      'Writing on how backend systems behave, break, and get debugged — and the judgment behind the decisions.',
+      'Notes on production failures, judgment under pressure, early-career questions, and why building still matters.',
     site: context.site,
     items,
   });

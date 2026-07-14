@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><!-- Set theme before paint to avoid flash (re-runs on each full load) --><script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CGSFs2wN.js"></script><!-- Favicon --><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><!-- SEO --><title>Why care about building at all - Debanjan</title><meta name="description" content="Code is temporary. The trust people put in what you shipped is not."><link rel="canonical" href="https://theybanjan.com/writing/why-building-matters/"><link rel="alternate" type="application/rss+xml" title="Debanjan - Writing" href="https://theybanjan.com/rss.xml"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://theybanjan.com/writing/why-building-matters/"><meta property="og:title" content="Why care about building at all - Debanjan"><meta property="og:description" content="Code is temporary. The trust people put in what you shipped is not."><meta property="og:image" content="https://theybanjan.com/og-image.png"><meta property="og:site_name" content="Debanjan"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@theybanjan"><meta name="twitter:creator" content="@theybanjan"><meta name="twitter:title" content="Why care about building at all - Debanjan"><meta name="twitter:description" content="Code is temporary. The trust people put in what you shipped is not."><meta name="twitter:image" content="https://theybanjan.com/og-image.png"><!-- Structured data (Person schema for search + answer engines) --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Debanjan Choudhury","alternateName":"Debanjan","url":"https://theybanjan.com","jobTitle":"Senior Software Engineer","worksFor":{"@type":"Organization","name":"Apollo.io"},"knowsAbout":["Backend systems","Distributed systems","Email deliverability","Reliability engineering","Observability"],"sameAs":["https://github.com/debanjanc01","https://www.linkedin.com/in/debanjanc01","https://x.com/theybanjan"]}</script><meta name="generator" content="Astro v5.13.5"><link rel="stylesheet" href="/_astro/about.xZrpiCgK.css">
+<style>.prose[data-astro-cid-jxnjfbl4] h2{font-size:1.35rem;margin-top:32px}.prose[data-astro-cid-jxnjfbl4] p,.prose[data-astro-cid-jxnjfbl4] ul{max-width:34em}
+</style><script type="module" src="/_astro/page.VIllvXJD.js"></script></head> <body> <header class="site-header"> <a class="brand" href="/">Debanjan</a> <nav class="nav"> <a href="/writing" aria-current="page"> writing </a><a href="/work"> work </a><a href="/about"> about </a><a href="/now"> now </a><a href="/contact"> contact </a> <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" type="button"> <svg id="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> <svg id="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </button> </nav> </header> <main class="container">  <div class="eyebrow" data-astro-cid-jxnjfbl4>Writing · 2026-07</div> <hr class="rule" data-astro-cid-jxnjfbl4> <h1 data-astro-cid-jxnjfbl4>Why care about building at all</h1> <article class="prose" data-astro-cid-jxnjfbl4> <p>It is easy to treat software as a ladder. Tickets. Titles. Stacks. Impact bullets. None of that answers why the work is worth the cost: the nights, the ambiguity, the knowledge that something you own can hurt real people when it lies.</p>
+<p>I care about building because software is how promises become automatic.</p>
+<p>A message is supposed to arrive. A sequence is supposed to stop when the customer says stop. A count is supposed to match reality. When those promises hold under load, someone sleeps. When they do not, someone loses trust. In the product. In the company. Sometimes in their own judgment for having shipped the thing.</p>
+<h2 id="building-is-not-the-same-as-shipping">Building is not the same as shipping</h2>
+<p>Shipping is a moment. Building is the longer practice: contracts that stay honest, observability you can defend, reviews that protect the next on-call, tools that make the right path the easy path.</p>
+<p>I have spent years on backends that look boring from the outside. Email. Messaging. Pipelines. Data paths. Boring is where trust lives. Nobody wants a clever notification system. They want one that does not invent failures or hide them.</p>
+<h2 id="against-the-empty-version-of-this-craft">Against the empty version of this craft</h2>
+<p>“Software is cool” is not a reason. Cool does not keep a retry policy from stampeding a shard. Cool does not walk someone through their first bad production week. Cool does not choose a small reversible step when ego wants a rewrite.</p>
+<p>The version I want is quieter. Make the system legible. Make the failure modes discussable. Leave the place more operable than you found it. That is a life practice as much as a technical one: patience, honesty, refusing to dump consequences on the next person.</p>
+<h2 id="what-i-still-believe">What I still believe</h2>
+<p>If you only love the whiteboard, you will hate the job. If you only love the incident, you will burn out the team. The reason to keep building sits in the middle: systems that stay trustworthy, and people who can keep becoming the kind of engineers those systems need.</p> </article> <p class="linkline" style="margin-top:48px" data-astro-cid-jxnjfbl4> <a href="/writing" data-astro-cid-jxnjfbl4>More writing →</a>
+· <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer" data-astro-cid-jxnjfbl4>@theybanjan</a>
+· <a href="mailto:debanjanc01@gmail.com" data-astro-cid-jxnjfbl4>email</a> </p> <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Why care about building at all","description":"Code is temporary. The trust people put in what you shipped is not.","datePublished":"2026-07-10","author":{"@type":"Person","name":"Debanjan Choudhury","url":"https://theybanjan.com"},"publisher":{"@type":"Person","name":"Debanjan Choudhury"},"mainEntityOfPage":"https://theybanjan.com/writing/why-building-matters/","url":"https://theybanjan.com/writing/why-building-matters/","image":"https://theybanjan.com/og-image.png","keywords":"philosophy, craft, trust"}</script>  </main> <footer class="site-footer"> <span>© 2026 Debanjan</span> <span> <a href="/timeline">Timeline</a> ·
+<a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a> ·
+<a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">LinkedIn</a> ·
+<a href="https://github.com/debanjanc01" target="_blank" rel="noreferrer">GitHub</a> </span> </footer> <!-- Theme toggle: delegated click + page-load icon sync (survives ClientRouter swaps) --> <script>
+      (function () {
+        function renderIcons() {
+          var sun = document.getElementById('sun-icon');
+          var moon = document.getElementById('moon-icon');
+          if (!sun || !moon) return;
+          var theme = document.documentElement.getAttribute('data-theme') || 'light';
+          sun.style.display = theme === 'dark' ? 'block' : 'none';
+          moon.style.display = theme === 'dark' ? 'none' : 'block';
+        }
+        if (!window.__themeToggleBound) {
+          window.__themeToggleBound = true;
+          document.addEventListener('click', function (e) {
+            var btn = e.target && e.target.closest && e.target.closest('#theme-toggle');
+            if (!btn) return;
+            var html = document.documentElement;
+            var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            try { localStorage.setItem('theme', next); } catch (err) {}
+            renderIcons();
+          });
+          document.addEventListener('astro:page-load', renderIcons);
+        }
+        renderIcons();
+      })();
+    </script> </body> </html> 

@@ -8,24 +8,26 @@ const projects = (await getCollection('work'))
 ---
 
 <BaseLayout
-  title="Work — Debanjan"
-  description="Production work on reliability and messaging systems, plus selected side projects."
+  title="Work - Debanjan"
+  description="Production work on messaging, cost, and reliability. A few side projects after that."
 >
   <div class="eyebrow">Work</div>
   <hr class="rule" />
   <h1>Work</h1>
-  <p class="lede">Production systems first — reliability, accounting, and cost under real load. Side projects below.</p>
+  <p class="lede">Start with production. Real load, real money, real pages. Side projects after that.</p>
 
   <section class="section" style="margin-top:28px">
     <div class="section-label">Production</div>
 
     <article class="card">
       <div class="work-head">
-        <h3 style="margin:0">Message accounting end-to-end</h3>
+        <h3 style="margin:0">Message accounting end to end</h3>
         <span class="tag">reliability</span>
       </div>
       <p style="margin:8px 0 12px">
-        Outbound platform across Email, SMS, App, and WhatsApp. Source and target counts didn't reconcile — false drops poisoned every investigation. Segregated stage metrics and eliminated logging artifacts until message counts accounted 100% source-to-target.
+        Outbound platform across Email, SMS, App, and WhatsApp. Source and target counts never matched.
+        False drops made every investigation a fight about the logs. We split metrics by stage, killed the fake failures,
+        and got to 100% accounting source to target.
       </p>
       <p class="linkline" style="margin:0">
         <a href="/writing/message-accounting">note →</a>
@@ -35,11 +37,13 @@ const projects = (await getCollection('work'))
 
     <article class="card">
       <div class="work-head">
-        <h3 style="margin:0">Cost, quality, and retry storms</h3>
+        <h3 style="margin:0">Cost, quality, and a retry storm</h3>
         <span class="tag">operations</span>
       </div>
       <p style="margin:8px 0 12px">
-        Cut AWS cost ~21% by removing network and disk-IO bottlenecks; lifted SonarQube quality metrics 78% across microservices; redesigned WhatsApp as a bot-of-bots. Separate incident path: a slow Aerospike shard turned into an outage when synchronized retries amplified the load — fixed with skip-bad-keys, backoff, and jitter.
+        Cut AWS cost about 21% by removing network and disk bottlenecks. Lifted SonarQube quality metrics 78% across services.
+        Redesigned WhatsApp as a bot-of-bots. Separate story: one slow Aerospike shard turned into an outage when retries lined up.
+        Fix was skip bad keys, then backoff with jitter.
       </p>
       <p class="linkline" style="margin:0">
         <a href="/writing/aerospike-retry-storm">retry storm note →</a>

@@ -7,4 +7,9 @@ location: Gurugram, Haryana, India
 stack: ["java", "spring", "kafka", "aerospike", "mysql", "redis"]
 focus: ["chatbot", "notifications", "A/B experiments"]
 ---
-Led outbound communication across Email, SMS, App, and WhatsApp. Drove 100% accounting of message counts source-to-target by segregating metrics and eliminating false drops; cut AWS cost ~21% by removing network and disk-IO bottlenecks; lifted SonarQube quality metrics 78% across microservices; and redesigned the WhatsApp chatbot to run as a "bot of bots."
+
+I owned outbound across Email, SMS, App, and WhatsApp.
+
+The counts did not match. What we sent and what we could prove at the other end drifted. We split metrics by stage, killed false drops, and got to 100% source-to-target accounting.
+
+Same stretch of time: cut AWS cost about 21% by fixing network and disk bottlenecks, lifted SonarQube quality scores 78% across services, and rebuilt WhatsApp as a bot-of-bots instead of one tangled bot.

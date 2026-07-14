@@ -1,9 +1,9 @@
 ---
 title: "bytecase"
 kind: project
-summary: "A collection of useful code snippets and scripts."
-decision: "Keep small, reusable building blocks in one place instead of re-solving the same problems across projects."
-lesson: "A personal library of sharp, tested snippets compounds — the second use pays for the first."
+summary: "A personal shelf of small code snippets and scripts I reuse."
+decision: "Keep sharp building blocks in one place instead of re-solving the same problems in every repo."
+lesson: "The second time you need a snippet pays for the first."
 repo: "https://github.com/debanjanc01/bytecase"
 order: 4
 ---

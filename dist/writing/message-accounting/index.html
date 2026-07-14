@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><!-- Set theme before paint to avoid flash (re-runs on each full load) --><script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CGSFs2wN.js"></script><!-- Favicon --><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><!-- SEO --><title>You can&#39;t operate what you can&#39;t count - Debanjan</title><meta name="description" content="The message counts did not add up. That was the outage. We just could not see it yet."><link rel="canonical" href="https://theybanjan.com/writing/message-accounting/"><link rel="alternate" type="application/rss+xml" title="Debanjan - Writing" href="https://theybanjan.com/rss.xml"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://theybanjan.com/writing/message-accounting/"><meta property="og:title" content="You can't operate what you can't count - Debanjan"><meta property="og:description" content="The message counts did not add up. That was the outage. We just could not see it yet."><meta property="og:image" content="https://theybanjan.com/og-image.png"><meta property="og:site_name" content="Debanjan"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@theybanjan"><meta name="twitter:creator" content="@theybanjan"><meta name="twitter:title" content="You can't operate what you can't count - Debanjan"><meta name="twitter:description" content="The message counts did not add up. That was the outage. We just could not see it yet."><meta name="twitter:image" content="https://theybanjan.com/og-image.png"><!-- Structured data (Person schema for search + answer engines) --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Debanjan Choudhury","alternateName":"Debanjan","url":"https://theybanjan.com","jobTitle":"Senior Software Engineer","worksFor":{"@type":"Organization","name":"Apollo.io"},"knowsAbout":["Backend systems","Distributed systems","Email deliverability","Reliability engineering","Observability"],"sameAs":["https://github.com/debanjanc01","https://www.linkedin.com/in/debanjanc01","https://x.com/theybanjan"]}</script><meta name="generator" content="Astro v5.13.5"><link rel="stylesheet" href="/_astro/about.xZrpiCgK.css">
+<style>.prose[data-astro-cid-jxnjfbl4] h2{font-size:1.35rem;margin-top:32px}.prose[data-astro-cid-jxnjfbl4] p,.prose[data-astro-cid-jxnjfbl4] ul{max-width:34em}
+</style><script type="module" src="/_astro/page.VIllvXJD.js"></script></head> <body> <header class="site-header"> <a class="brand" href="/">Debanjan</a> <nav class="nav"> <a href="/writing" aria-current="page"> writing </a><a href="/work"> work </a><a href="/about"> about </a><a href="/now"> now </a><a href="/contact"> contact </a> <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" type="button"> <svg id="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> <svg id="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </button> </nav> </header> <main class="container">  <div class="eyebrow" data-astro-cid-jxnjfbl4>Writing · 2026-06</div> <hr class="rule" data-astro-cid-jxnjfbl4> <h1 data-astro-cid-jxnjfbl4>You can&#39;t operate what you can&#39;t count</h1> <article class="prose" data-astro-cid-jxnjfbl4> <p>We ran an outbound platform across Email, SMS, App, and WhatsApp. What we sent at the source did not match what we could account for at the target. Between “queued” and “delivered,” the numbers quietly drifted.</p>
+<p>That gap is worse than it looks. When delivery numbers and logged numbers disagree, you cannot tell a real failure from a logging artifact. Every investigation starts with an argument about which layer is lying. You debug the instrument instead of the system.</p>
+<h2 id="what-the-work-actually-was">What the work actually was</h2>
+<p>Not a rewrite. Making the numbers trustworthy.</p>
+<ul>
+<li>Count each stage on its own so one aggregate cannot hide the break.</li>
+<li>Walk the hops until you find where the count diverges.</li>
+<li>Kill false drops: requests logged as failures that had already been delivered. Those poison every signal.</li>
+</ul>
+<p>We got to 100% accounting of message counts from source to target. A number you could defend.</p>
+<h2 id="what-i-still-believe">What I still believe</h2>
+<p>Observability is not a wall of dashboards. It is counts you can trust. A metric you do not believe is worse than no metric. It sends you to the wrong layer with confidence.</p>
+<p>Before you optimize a pipeline, make it auditable. If you cannot say where each message went, you are not operating the system. You are hoping.</p> </article> <p class="linkline" style="margin-top:48px" data-astro-cid-jxnjfbl4> <a href="/writing" data-astro-cid-jxnjfbl4>More writing →</a>
+· <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer" data-astro-cid-jxnjfbl4>@theybanjan</a>
+· <a href="mailto:debanjanc01@gmail.com" data-astro-cid-jxnjfbl4>email</a> </p> <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"You can't operate what you can't count","description":"The message counts did not add up. That was the outage. We just could not see it yet.","datePublished":"2026-06-13","author":{"@type":"Person","name":"Debanjan Choudhury","url":"https://theybanjan.com"},"publisher":{"@type":"Person","name":"Debanjan Choudhury"},"mainEntityOfPage":"https://theybanjan.com/writing/message-accounting/","url":"https://theybanjan.com/writing/message-accounting/","image":"https://theybanjan.com/og-image.png","keywords":"reliability, observability"}</script>  </main> <footer class="site-footer"> <span>© 2026 Debanjan</span> <span> <a href="/timeline">Timeline</a> ·
+<a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a> ·
+<a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">LinkedIn</a> ·
+<a href="https://github.com/debanjanc01" target="_blank" rel="noreferrer">GitHub</a> </span> </footer> <!-- Theme toggle: delegated click + page-load icon sync (survives ClientRouter swaps) --> <script>
+      (function () {
+        function renderIcons() {
+          var sun = document.getElementById('sun-icon');
+          var moon = document.getElementById('moon-icon');
+          if (!sun || !moon) return;
+          var theme = document.documentElement.getAttribute('data-theme') || 'light';
+          sun.style.display = theme === 'dark' ? 'block' : 'none';
+          moon.style.display = theme === 'dark' ? 'none' : 'block';
+        }
+        if (!window.__themeToggleBound) {
+          window.__themeToggleBound = true;
+          document.addEventListener('click', function (e) {
+            var btn = e.target && e.target.closest && e.target.closest('#theme-toggle');
+            if (!btn) return;
+            var html = document.documentElement;
+            var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            try { localStorage.setItem('theme', next); } catch (err) {}
+            renderIcons();
+          });
+          document.addEventListener('astro:page-load', renderIcons);
+        }
+        renderIcons();
+      })();
+    </script> </body> </html> 

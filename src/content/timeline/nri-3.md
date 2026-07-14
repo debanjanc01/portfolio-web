@@ -7,4 +7,5 @@ location: Kolkata, West Bengal, India
 stack: ["daml", "java", "dlt"]
 focus: ["DLT", "business modeling"]
 ---
-Key contributor to the DAML Centre of Excellence; modeled business flows using Distributed Ledger Technology (DLT).
+
+Early career, DAML Centre of Excellence. I modeled business flows on Distributed Ledger Technology and learned how much of "the system" is really agreements people expect to hold under load.

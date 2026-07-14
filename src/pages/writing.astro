@@ -15,18 +15,34 @@ const external = all
   .filter((e) => e.data.kind !== 'note')
   .sort(byRecency);
 
+const modeLabel = (mode) => {
+  const map = {
+    dive: 'deep dive',
+    lesson: 'lesson',
+    career: 'career',
+    human: 'human',
+    philosophy: 'philosophy',
+    building: 'building',
+  };
+  return mode ? map[mode] ?? mode : 'note';
+};
+
 const fmtDate = (d?: Date) =>
   d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}` : '';
 ---
 
 <BaseLayout
-  title="Writing — Debanjan"
-  description="Notes on production failure and observability, plus selected articles on monitoring tools."
+  title="Writing - Debanjan"
+  description="Notes on production failures, judgment under pressure, early-career questions, and why building still matters."
 >
   <div class="eyebrow">Writing</div>
   <hr class="rule" />
   <h1>Writing</h1>
-  <p class="lede">Notes from production systems — how they fail, how you count what matters, and what the fix actually looked like. External articles below.</p>
+  <p class="lede">
+    Long notes live here. Outages, people, career, philosophy. The short version is on
+    <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a>.
+    Tool roundups from other sites sit at the bottom. They're not the point of this page.
+  </p>
 
   {notes.length > 0 && (
     <section class="section" style="margin-top:28px">
@@ -35,7 +51,7 @@ const fmtDate = (d?: Date) =>
         {notes.map((e) => (
           <a class="post-card" href={`/writing/${e.slug}`}>
             <div class="post-head">
-              <span>note</span>
+              <span>{modeLabel(e.data.mode)}</span>
               <span>{fmtDate(e.data.date)}</span>
             </div>
             <p style="margin:0 0 6px;color:var(--ink);font-weight:500">{e.data.title}</p>
@@ -48,7 +64,8 @@ const fmtDate = (d?: Date) =>
 
   {external.length > 0 && (
     <section class="section">
-      <div class="section-label">Articles</div>
+      <div class="section-label">Elsewhere (external)</div>
+      <p class="external-note">Comparisons and list pieces I wrote for other sites. Useful. Not the main story.</p>
       <div class="rows">
         {external.map((e) => (
           <div class="row">
@@ -69,8 +86,8 @@ const fmtDate = (d?: Date) =>
 
   <p class="linkline" style="margin-top:40px">
     <a href="/rss.xml">RSS</a>
-    · also at
-    <a href="https://geekflare.com/author/debanjan/" target="_blank" rel="noreferrer">Geekflare</a>
+    · <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a>
+    · <a href="https://geekflare.com/author/debanjan/" target="_blank" rel="noreferrer">Geekflare</a>
   </p>
 </BaseLayout>
 
@@ -78,4 +95,10 @@ const fmtDate = (d?: Date) =>
   .row-left { display: flex; align-items: baseline; min-width: 0; }
   a.post-card { display: block; color: inherit; border: 0; text-decoration: none; }
   a.post-card:hover { border-color: var(--ink-muted); }
+  .external-note {
+    margin: 0 0 10px;
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    max-width: 36em;
+  }
 </style>
