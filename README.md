@@ -1,26 +1,12 @@
-# Debanjan's Portfolio
+# portfolio-web
 
-> Senior Software Engineer building reliable systems that scale.
-
-**Live:** [theybanjan.com](https://theybanjan.com)
-
-## 🚀 Quick Start
+Source for [theybanjan.com](https://theybanjan.com).
 
 ```bash
-git clone https://github.com/debanjanc01/portfolio-web.git
-cd portfolio-web
 npm install
 npm run dev
 ```
 
-## 🛠️ Built With
+`npm test` checks the built site, so run `npm run build` first. A push to `master` deploys through GitHub Pages.
 
-- **Astro** - Static site generator
-- **Vanilla CSS** - Custom properties & minimal styling
-- **GitHub Pages** - Auto-deploy on push
-
-## 🎯 Design
-
-- Typography-first, minimal CSS
-- Responsive & accessible
-- Fast loading, zero bloat
+Astro, one stylesheet.
