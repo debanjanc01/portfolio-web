@@ -9,10 +9,10 @@ const fmt = (d: Date) => `${d.getFullYear()}`;
 
 <BaseLayout
   title="Timeline - Debanjan"
-  description="Debanjan's path, newest first. Apollo now. Snapdeal before that. A few earlier stops under those."
+  description="Debanjan's path, newest first. Apollo now. Snapdeal before that. Nomura before that, on broker back-office systems for the Australian stock market."
 >
   <h1>Timeline</h1>
-  <p class="lede">Newest first. Apollo now. Snapdeal before that. A few earlier stops under those.</p>
+  <p class="lede">Newest first. Apollo now. Snapdeal before that. Before either, Nomura, building broker back-office systems for the Australian stock market.</p>
 
   <ol class="career">
     {await Promise.all(entries.map(async (e) => {
