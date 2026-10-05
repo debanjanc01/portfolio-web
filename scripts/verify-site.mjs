@@ -44,7 +44,7 @@ function walkFiles(dir, ext) {
 
 // --- Build output present ---
 assert(exists(path.join(dist, 'index.html')), 'dist/index.html missing - run npm run build first');
-for (const seg of ['writing', 'about', 'now', 'contact', 'work', 'timeline']) {
+for (const seg of ['writing', 'about', 'now', 'contact', 'timeline']) {
   assert(exists(path.join(dist, seg, 'index.html')), `dist/${seg}/index.html missing`);
 }
 
@@ -141,11 +141,10 @@ assert(
 );
 assert(/linkedin\.com\/in\/debanjanc01/i.test(home), 'home: missing LinkedIn');
 
-const workPage = read(path.join(dist, 'work', 'index.html'));
-assert(/100%|message accounting|Snapdeal/i.test(workPage), 'work: missing specific production proof');
+assert(!exists(path.join(dist, 'work', 'index.html')), 'work page should stay unpublished for now');
 
 // Paths
-for (const href of ['/writing', '/work', '/about', '/contact', '/now', '/timeline', 'https://x.com/theybanjan']) {
+for (const href of ['/writing', '/about', '/contact', '/now', '/timeline', 'https://x.com/theybanjan']) {
   assert(home.includes(href), `home: missing path ${href}`);
 }
 
