@@ -15,89 +15,62 @@ const external = all
   .filter((e) => e.data.kind !== 'note')
   .sort(byRecency);
 
-const modeLabel = (mode) => {
-  const map = {
-    dive: 'deep dive',
-    lesson: 'lesson',
-    career: 'career',
-    human: 'human',
-    philosophy: 'philosophy',
-    building: 'building',
-  };
-  return mode ? map[mode] ?? mode : 'note';
-};
-
 const fmtDate = (d?: Date) =>
   d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}` : '';
 ---
 
 <BaseLayout
   title="Writing - Debanjan"
-  description="Notes on production failures, judgment under pressure, early-career questions, and why building still matters."
+  description="Longer notes by Debanjan Choudhury. Short takes are on X. The professional version is on LinkedIn."
 >
-  <div class="eyebrow">Writing</div>
-  <hr class="rule" />
   <h1>Writing</h1>
-  <p class="lede">
-    Long notes live here. Outages, people, career, philosophy. The short version is on
-    <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a>.
-    Tool roundups from other sites sit at the bottom. They're not the point of this page.
+  <p class="intro-quiet">
+    The longer pieces. Short takes and brain dumps are on
+    <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">X</a>.
+    The polished professional version is on
+    <a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">LinkedIn</a>.
   </p>
 
   {notes.length > 0 && (
-    <section class="section" style="margin-top:28px">
-      <div class="section-label">Notes</div>
-      <div class="posts">
-        {notes.map((e) => (
-          <a class="post-card" href={`/writing/${e.slug}`}>
-            <div class="post-head">
-              <span>{modeLabel(e.data.mode)}</span>
-              <span>{fmtDate(e.data.date)}</span>
-            </div>
-            <p style="margin:0 0 6px;color:var(--ink);font-weight:500">{e.data.title}</p>
-            {e.data.hook && <p class="post-hook">{e.data.hook}</p>}
+    <ul class="notes">
+      {notes.map((e) => (
+        <li>
+          <a class="note-link" href={`/writing/${e.slug}`}>
+            <span class="note-date">{fmtDate(e.data.date)}</span>
+            <span class="note-title">{e.data.title}</span>
+            {e.data.hook && <span class="note-hook">{e.data.hook}</span>}
           </a>
-        ))}
-      </div>
-    </section>
+        </li>
+      ))}
+    </ul>
   )}
 
   {external.length > 0 && (
     <section class="section">
-      <div class="section-label">Elsewhere (external)</div>
-      <p class="external-note">Comparisons and list pieces I wrote for other sites. Useful. Not the main story.</p>
-      <div class="rows">
+      <h2>Other sites</h2>
+      <p class="external-note">Pieces I wrote for other sites.</p>
+      <ul class="notes">
         {external.map((e) => (
-          <div class="row">
-            <span class="row-left">
-              <span class="tag">{e.data.kind}</span>
-              {e.data.url ? (
-                <a class="row-title" href={e.data.url} target="_blank" rel="noreferrer">{e.data.title}</a>
-              ) : (
-                <a class="row-title" href={`/writing/${e.slug}`}>{e.data.title}</a>
-              )}
-            </span>
-            <span class="row-meta">{[e.data.source, e.data.date ? fmtDate(e.data.date) : null].filter(Boolean).join(' · ')}</span>
-          </div>
+          <li>
+            <a class="note-link" href={e.data.url ?? `/writing/${e.slug}`} target={e.data.url ? '_blank' : undefined} rel={e.data.url ? 'noreferrer' : undefined}>
+              <span class="note-date">{e.data.source ?? fmtDate(e.data.date)}</span>
+              <span class="note-title">{e.data.title}</span>
+            </a>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   )}
 
-  <p class="linkline" style="margin-top:40px">
+  <p style="margin-top:36px">
     <a href="/rss.xml">RSS</a>
-    · <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a>
-    · <a href="https://geekflare.com/author/debanjan/" target="_blank" rel="noreferrer">Geekflare</a>
   </p>
 </BaseLayout>
 
 <style>
-  .row-left { display: flex; align-items: baseline; min-width: 0; }
-  a.post-card { display: block; color: inherit; border: 0; text-decoration: none; }
-  a.post-card:hover { border-color: var(--ink-muted); }
+  .intro-quiet { color: var(--ink-muted); max-width: 36em; margin-top: 0; }
   .external-note {
-    margin: 0 0 10px;
-    font-size: 0.92rem;
+    margin: 0;
     color: var(--ink-muted);
     max-width: 36em;
   }

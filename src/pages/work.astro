@@ -9,80 +9,54 @@ const projects = (await getCollection('work'))
 
 <BaseLayout
   title="Work - Debanjan"
-  description="Production work on messaging, cost, and reliability. A few side projects after that."
+  description="Work by Debanjan Choudhury: Apollo's Claude connector, Snapdeal messaging, and a few side projects."
 >
-  <div class="eyebrow">Work</div>
-  <hr class="rule" />
   <h1>Work</h1>
-  <p class="lede">Start with production. Real load, real money, real pages. Side projects after that.</p>
+  <p class="lede">Things that shipped, then had to keep working. Notes are linked where I wrote them up.</p>
 
-  <section class="section" style="margin-top:28px">
-    <div class="section-label">Production</div>
-
-    <article class="card">
-      <div class="work-head">
-        <h3 style="margin:0">Message accounting end to end</h3>
-        <span class="tag">reliability</span>
-      </div>
-      <p style="margin:8px 0 12px">
-        Outbound platform across Email, SMS, App, and WhatsApp. Source and target counts never matched.
-        False drops made every investigation a fight about the logs. We split metrics by stage, killed the fake failures,
-        and got to 100% accounting source to target.
-      </p>
-      <p class="linkline" style="margin:0">
-        <a href="/writing/message-accounting">note →</a>
-        · <a href="/timeline">timeline →</a>
-      </p>
-    </article>
-
-    <article class="card">
-      <div class="work-head">
-        <h3 style="margin:0">Cost, quality, and a retry storm</h3>
-        <span class="tag">operations</span>
-      </div>
-      <p style="margin:8px 0 12px">
-        Cut AWS cost about 21% by removing network and disk bottlenecks. Lifted SonarQube quality metrics 78% across services.
-        Redesigned WhatsApp as a bot-of-bots. Separate story: one slow Aerospike shard turned into an outage when retries lined up.
-        Fix was skip bad keys, then backoff with jitter.
-      </p>
-      <p class="linkline" style="margin:0">
-        <a href="/writing/aerospike-retry-storm">retry storm note →</a>
-        · <a href="/timeline">timeline →</a>
-      </p>
-    </article>
+  <section class="section">
+    <h2>Production</h2>
+    <ul class="notes">
+      <li>
+        <h3>Claude connector</h3>
+        <p>Apollo's connector and MCP server for Claude. From a chat you can search people, enrich them, and add them to a sequence. A small team shipped it in about ten days. I was on that team.</p>
+      </li>
+      <li>
+        <h3>Message accounting end to end</h3>
+        <p>Outbound across email, SMS, app, and WhatsApp. What we sent and what we could prove at the other end did not match, and the logs argued with us. We split the metrics by stage, dropped the fake failures, and got to 100% accounting from source to target.</p>
+        <p><a href="/writing/message-accounting">The counts did not add up</a></p>
+      </li>
+      <li>
+        <h3>Cost, quality, and a retry storm</h3>
+        <p>Cut AWS cost about 21% by clearing network and disk bottlenecks. SonarQube quality scores up 78% across services. Rebuilt WhatsApp as a bot-of-bots. Separate mess: one slow Aerospike shard, then retries lined up and took the system with it. Fix was skip the bad keys, then backoff with jitter.</p>
+        <p><a href="/writing/aerospike-retry-storm">One slow shard</a></p>
+      </li>
+    </ul>
   </section>
 
   {projects.length > 0 && (
     <section class="section">
-      <div class="section-label">Side projects</div>
-      <div style="margin-top:8px">
+      <h2>Side projects</h2>
+      <ul class="notes">
         {projects.map((p) => (
-          <article class="card side-card">
-            <div class="work-head">
-              <h3 style="margin:0;font-size:1.05rem">
-                {p.data.repo ? (
-                  <a href={p.data.repo} target="_blank" rel="noreferrer">{p.data.title}</a>
-                ) : p.data.title}
-              </h3>
-              <span class="tag">{p.data.kind}</span>
-            </div>
-            <p style="margin:8px 0 0;font-size:0.95rem">{p.data.summary}</p>
-            {(p.data.repo || p.data.demo) && (
-              <p class="linkline" style="margin:10px 0 0">
-                {p.data.repo && <a href={p.data.repo} target="_blank" rel="noreferrer">repo ↗</a>}
-                {p.data.demo && <> · <a href={p.data.demo} target="_blank" rel="noreferrer">demo ↗</a></>}
-              </p>
-            )}
-          </article>
+          <li>
+            <h3>
+              {p.data.repo ? (
+                <a href={p.data.repo} target="_blank" rel="noreferrer">{p.data.title}</a>
+              ) : p.data.title}
+            </h3>
+            <p>{p.data.summary}</p>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   )}
 </BaseLayout>
 
 <style>
-  .work-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .card h3 a { border: 0; }
-  .card h3 a:hover { border-bottom: 1px solid var(--ink); }
-  .side-card { padding: 14px 16px; margin: 10px 0; }
+  .notes h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .notes h3 a { border-bottom-color: transparent; }
+  .notes h3 a:hover { border-bottom-color: var(--ink); }
+  .notes p { margin: 0 0 8px; }
+  .notes p:last-child { margin: 0; }
 </style>

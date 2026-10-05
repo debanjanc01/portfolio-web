@@ -1,9 +1,9 @@
 ---
-title: "When retries become the outage"
+title: "One slow shard"
 kind: note
 mode: dive
 date: 2026-06-20
-hook: "One slow shard did not take us down. Our retries did."
+hook: "The shard got slow. Our retries took the system with it."
 tags: [reliability, distributed-systems]
 order: 10
 draft: false

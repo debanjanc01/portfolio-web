@@ -9,12 +9,10 @@ const fmt = (d: Date) => `${d.getFullYear()}`;
 
 <BaseLayout
   title="Timeline - Debanjan"
-  description="Career path: 8+ years of backend work across messaging, email, and production systems."
+  description="Debanjan's path, newest first. Apollo now. Snapdeal before that. A few earlier stops under those."
 >
-  <div class="eyebrow">Career</div>
-  <hr class="rule" />
   <h1>Timeline</h1>
-  <p class="lede">Eight-plus years of backends. Messaging platforms, reconciliation, email infrastructure. The long path, in order.</p>
+  <p class="lede">Newest first. Apollo now. Snapdeal before that. A few earlier stops under those.</p>
 
   <ol class="career">
     {await Promise.all(entries.map(async (e) => {
@@ -28,8 +26,6 @@ const fmt = (d: Date) => `${d.getFullYear()}`;
           role={e.data.role}
           company={e.data.company}
           location={e.data.location}
-          focus={e.data.focus}
-          stack={e.data.stack}
         >
           <Content />
         </TimelineEvent>

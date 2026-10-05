@@ -1,33 +1,22 @@
 ---
 import BaseLayout from "../layouts/Base.astro";
 
-const updated = "July 2026";
+const updated = "October 2026";
 ---
 
 <BaseLayout
   title="Now - Debanjan"
-  description="What has my attention right now: work, writing, and what I'm learning."
+  description="What Debanjan is on in October 2026: email and sequences at Apollo, agents, and a diary that writes back."
 >
-  <div class="eyebrow">Now · updated {updated}</div>
-  <hr class="rule" />
+  <p class="kicker">Updated {updated}</p>
   <h1>Now</h1>
-  <p class="lede">A plain snapshot of what I'm on. Inspired by the <a href="https://nownownow.com/about" target="_blank" rel="noreferrer">/now page</a> idea.</p>
 
   <h2>Working on</h2>
-  <p>Email deliverability and sequences at Apollo.io. Inbox placement, sequence correctness, paths that still have to work when something retries or fails halfway.</p>
+  <p>Email deliverability and sequences at Apollo, and the agent work next to them. The Claude connector is shipped. On the side, <a href="https://tomsdiary.ink" target="_blank" rel="noreferrer">a diary</a> that writes back.</p>
 
   <h2>Writing</h2>
-  <p>Production notes next to the human and career stuff. One real scene beats a generic essay. Short form on <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a>.</p>
+  <p>Long notes live on this site. The shorter stuff is on <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">X</a>. The tidy version is on <a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">LinkedIn</a>.</p>
 
   <h2>Thinking about</h2>
-  <p>How to stay calm without playing hero. Better questions in design review. Mentoring without sanding the bar down. Focus as a finite resource.</p>
-
-  <h2>Learning</h2>
-  <p>Small tools when the problem is actually mine. Building over passive scrolling. Still chasing observability that you can trust, not just dashboards that look busy.</p>
-
-  <p class="linkline" style="margin-top:40px">
-    <a href="/about">about →</a> ·
-    <a href="/writing">writing →</a> ·
-    <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a>
-  </p>
+  <p>What an agent does to a repo once you hand it one. When it is worth understanding the model, and when people skip that and just ship. How not to turn the job into a 24/7 agent factory.</p>
 </BaseLayout>

@@ -1,9 +1,9 @@
 ---
-title: "You can't operate what you can't count"
+title: "The counts did not add up"
 kind: note
 mode: dive
 date: 2026-06-13
-hook: "The message counts did not add up. That was the outage. We just could not see it yet."
+hook: "What we sent and what we could prove did not match. That was the outage."
 tags: [reliability, observability]
 order: 9
 draft: false

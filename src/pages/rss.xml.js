@@ -18,7 +18,7 @@ export async function GET(context) {
   return rss({
     title: 'Debanjan - Writing',
     description:
-      'Notes on production failures, judgment under pressure, early-career questions, and why building still matters.',
+      'Long notes by Debanjan Choudhury.',
     site: context.site,
     items,
   });

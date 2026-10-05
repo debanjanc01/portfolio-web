@@ -1,9 +1,9 @@
 ---
-title: "The questions that made me less junior"
+title: "I was missing better questions"
 kind: note
 mode: career
 date: 2026-07-08
-hook: "I stopped asking only 'does it work?' and started asking what happens twice, late, and when it fails halfway."
+hook: "I kept naming patterns. The useful move was a better question."
 tags: [early-career, design-review, judgment]
 order: 12
 draft: false

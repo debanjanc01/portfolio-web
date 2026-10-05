@@ -4,45 +4,20 @@ import BaseLayout from "../layouts/Base.astro";
 
 <BaseLayout
   title="About - Debanjan"
-  description="Backend engineer with 8+ years. I care about systems that stay honest after they ship, and the people who have to run them."
+  description="Debanjan Choudhury. Tech lead at Apollo in Delhi. Eight years of backend work, from Snapdeal messaging to email, sequences, and agents."
   ogImage="/og-image.png"
 >
-  <div class="eyebrow">About</div>
-  <hr class="rule" />
   <h1>About</h1>
-  <p class="lede">I got good at engineering by breaking things and staying long enough to fix them properly. Eight-plus years of backends later, I still think the interesting work starts after the demo.</p>
+  <p class="lede">Tech lead at Apollo, in Delhi. Eight years of backend work. Messaging at Snapdeal first. Email, sequences, and agents now.</p>
 
   <h2>What I do</h2>
-  <p>I build services with clear contracts and boring, trustworthy telemetry. Right now that's email deliverability and sequences at Apollo.io. Before that, messaging and notifications at Snapdeal: counts that had to match, cost that had to come down, bots that had to stop being a mess.</p>
-  <p>I write about the same world. Retries that stampede. Metrics you can't trust. The human side of a page. Questions that make you less junior. Why any of this is worth the cost.</p>
+  <p>Apollo is sales engagement. I work on deliverability and sequences, and on the agent layer next to them. I was on the small team that shipped the Claude connector and MCP server in about ten days. From Claude you can search people, enrich them, and add them to a sequence.</p>
+  <p>Before that, Snapdeal. Notifications and WhatsApp. The bugs that stuck were off the happy path. Counts that drifted. One slow Aerospike shard, then retries that took the system with them. A bot setup that had turned into a pile of special cases.</p>
+  <p>On the side I'm building <a href="https://tomsdiary.ink" target="_blank" rel="noreferrer">a diary</a> that writes back. The half-finished thoughts about agents and repos are on <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">X</a>.</p>
 
-  <h2>How I think about the work</h2>
-  <p>Seniority is not a bigger pattern catalog. It's seeing what happens twice, late, partially, or during recovery, before it hits someone at 3 a.m.</p>
-  <p>It's also how you show up. Calm when the room wants a hero. Risk said early. Docs that still make sense next year. Time spent with people earlier on the path.</p>
-
-  <h2>Focus</h2>
-  <ul>
-    <li><strong>APIs and services:</strong> contracts, performance, migrations</li>
-    <li><strong>Reliability and observability:</strong> SLOs, metrics, logs, traces</li>
-    <li><strong>Data systems:</strong> PostgreSQL, MongoDB, Elasticsearch, Kafka</li>
-  </ul>
+  <h2>How I work</h2>
+  <p>I care more about the second run than the demo. What happens twice, late, or halfway through a failure. Small steps you can undo. Notes the next person can use.</p>
 
   <h2>Stack</h2>
-  <p>Ruby, Go, Java, Python. PostgreSQL, MongoDB, Redis, Aerospike, Kafka, Kubernetes. Prometheus, Grafana, Datadog, OpenTelemetry.</p>
-
-  <h2>Principles I actually use</h2>
-  <ul>
-    <li>Design for on-call: idempotency, backpressure, timeouts</li>
-    <li>If you can't count it cleanly, you can't operate it</li>
-    <li>Small reversible steps beat clever rewrites</li>
-    <li>Leave the next human better notes than you got</li>
-  </ul>
-
-  <p class="linkline" style="margin-top:40px">
-    <a href="/timeline">timeline →</a> ·
-    <a href="/work">work →</a> ·
-    <a href="/now">now →</a> ·
-    <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a> ·
-    <a href="/writing">writing →</a>
-  </p>
+  <p>Ruby, Go, Java, Python. PostgreSQL, MongoDB, Redis, Aerospike, Kafka, Kubernetes. Prometheus, Grafana, Datadog, OpenTelemetry. Lately Claude, Cursor, and whatever gateway is in front of the model.</p>
 </BaseLayout>

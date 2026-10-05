@@ -1,9 +1,9 @@
 ---
-title: "Calm is a production skill"
+title: "Loud is not the same as right"
 kind: note
 mode: human
 date: 2026-07-02
-hook: "Heroics feel like leadership in the moment. They usually make the next incident worse."
+hook: "The fastest person in an incident is not always the one who ends it."
 tags: [incidents, judgment, teams]
 order: 11
 draft: false

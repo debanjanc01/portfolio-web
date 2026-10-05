@@ -8,8 +8,8 @@ export interface Props {
   ogImage?: string;
 }
 const {
-  title = 'Debanjan - Senior Software Engineer',
-  description = 'I write about what happens after the design ships: bad retries, bad metrics, bad habits. Backend engineer, 8+ years.',
+  title = 'Debanjan Choudhury',
+  description = 'Debanjan Choudhury. Tech lead at Apollo. Long writing here. Short takes on X.',
   ogImage = '/og-image.png'
 } = Astro.props as Props;
 
@@ -23,12 +23,13 @@ const personSchema = {
   name: 'Debanjan Choudhury',
   alternateName: 'Debanjan',
   url: 'https://theybanjan.com',
-  jobTitle: 'Senior Software Engineer',
+  jobTitle: 'Tech Lead',
   worksFor: { '@type': 'Organization', name: 'Apollo.io' },
   knowsAbout: [
     'Backend systems',
     'Distributed systems',
     'Email deliverability',
+    'AI agents',
     'Reliability engineering',
     'Observability',
   ],
@@ -42,6 +43,7 @@ const personSchema = {
 const navItems = [
   { href: '/writing', label: 'writing', match: '/writing' },
   { href: '/work', label: 'work', match: '/work' },
+  { href: '/timeline', label: 'timeline', match: '/timeline' },
   { href: '/about', label: 'about', match: '/about' },
   { href: '/now', label: 'now', match: '/now' },
   { href: '/contact', label: 'contact', match: '/contact' },
@@ -115,7 +117,8 @@ function isActive(match: string) {
             {item.label}
           </a>
         ))}
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" type="button">
+      </nav>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" type="button">
           <svg id="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
             <circle cx="12" cy="12" r="5"/>
             <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
@@ -126,8 +129,7 @@ function isActive(match: string) {
           <svg id="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
-        </button>
-      </nav>
+      </button>
     </header>
 
     <main class="container">
@@ -137,8 +139,7 @@ function isActive(match: string) {
     <footer class="site-footer">
       <span>© {new Date().getFullYear()} Debanjan</span>
       <span>
-        <a href="/timeline">Timeline</a> ·
-        <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a> ·
+        <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">X</a> ·
         <a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">LinkedIn</a> ·
         <a href="https://github.com/debanjanc01" target="_blank" rel="noreferrer">GitHub</a>
       </span>
@@ -147,6 +148,14 @@ function isActive(match: string) {
     <!-- Theme toggle: delegated click + page-load icon sync (survives ClientRouter swaps) -->
     <script is:inline>
       (function () {
+        function applySavedTheme() {
+          try {
+            var saved = localStorage.getItem('theme');
+            if (saved === 'light' || saved === 'dark') {
+              document.documentElement.setAttribute('data-theme', saved);
+            }
+          } catch (e) {}
+        }
         function renderIcons() {
           var sun = document.getElementById('sun-icon');
           var moon = document.getElementById('moon-icon');
@@ -166,8 +175,12 @@ function isActive(match: string) {
             try { localStorage.setItem('theme', next); } catch (err) {}
             renderIcons();
           });
-          document.addEventListener('astro:page-load', renderIcons);
+          document.addEventListener('astro:page-load', function () {
+            applySavedTheme();
+            renderIcons();
+          });
         }
+        applySavedTheme();
         renderIcons();
       })();
     </script>

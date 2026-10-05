@@ -1,13 +1,9 @@
 ---
 import BaseLayout from "../layouts/Base.astro";
 import { getCollection } from 'astro:content';
-import { selectHomeNotes } from '../lib/selectHomeNotes.js';
 
-const allNotes = (await getCollection('writing'))
-  .filter((e) => !e.data.draft && e.data.kind === 'note' && !e.data.url);
-
-const featured = allNotes
-  .filter((e) => e.data.featured)
+const notes = (await getCollection('writing'))
+  .filter((e) => !e.data.draft && e.data.kind === 'note' && !e.data.url)
   .sort((a, b) => {
     const ad = a.data.date ? a.data.date.getTime() : 0;
     const bd = b.data.date ? b.data.date.getTime() : 0;
@@ -15,141 +11,51 @@ const featured = allNotes
     return (b.data.order ?? 0) - (a.data.order ?? 0);
   });
 
-const notes = selectHomeNotes(featured.length ? featured : allNotes);
-
-const modeLabel = (mode) => {
-  const map = {
-    dive: 'deep dive',
-    lesson: 'lesson',
-    career: 'career',
-    human: 'human',
-    philosophy: 'philosophy',
-    building: 'building',
-  };
-  return mode ? map[mode] ?? mode : 'note';
-};
-
 const fmtDate = (d) =>
   d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}` : '';
 ---
 
 <BaseLayout
-  title="Debanjan - Senior Software Engineer"
-  description="I write about what happens after the design ships: bad retries, bad metrics, bad habits. Backend engineer, 8+ years. @theybanjan"
+  title="Debanjan Choudhury"
+  description="Debanjan Choudhury, tech lead at Apollo. Eight years in backends, mostly the unglamorous parts. Email deliverability, sequences, and the Claude connector. Long writing here. Short takes on X."
   ogImage="/og-image.png"
 >
-  <section class="hero">
-    <h1>Most designs die after they ship.</h1>
-    <p class="lede">
-      Not in a meeting. In production. Under retries, bad counts, and people who are tired.
-      I care about that part. The part where a system either stays honest or slowly starts lying.
-    </p>
-    <p class="lede lede-soft">
-      I'm Debanjan. Senior engineer, 8+ years in backends. Right now I work on email deliverability and sequences at Apollo.io.
-      Here I write the long form: outages, early-career mistakes, calm under pressure, and why building still matters.
-    </p>
-
-    <div class="path-row" aria-label="Primary paths">
-      <a class="path-primary" href="/writing">Start with a note →</a>
-      <span class="path-sep" aria-hidden="true">·</span>
-      <a href="/work">Work</a>
-      <span class="path-sep" aria-hidden="true">·</span>
-      <a href="/about">About</a>
-      <span class="path-sep" aria-hidden="true">·</span>
-      <a href="/contact">Contact</a>
-    </div>
-    <p class="follow-reason">
-      Shorter thoughts, same obsessions:
-      <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">@theybanjan</a>.
-      Production scars, career questions, how to keep building without becoming a hero cosplay.
-    </p>
-  </section>
+  <h1>Debanjan Choudhury</h1>
+  <p class="intro">
+    Tech lead at Apollo. Eight years in backends, mostly the unglamorous parts: the trace after an agent ships, the edge case on the second run, the repo a model is only as good as. The day job under that is email deliverability and sequences. I helped ship the Claude connector, so a chat can search people, enrich them, and add them to a sequence.
+  </p>
+  <p class="intro-quiet">
+    This site is the long version. Short takes and brain dumps are on
+    <a href="https://x.com/theybanjan" target="_blank" rel="noreferrer">X</a>.
+    The polished professional version is on
+    <a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">LinkedIn</a>.
+  </p>
 
   {notes.length > 0 && (
-    <section class="section">
-      <div class="section-label">Selected writing</div>
-      <p class="section-intro">Outages next to people stuff. That's the job.</p>
-      <div class="posts">
-        {notes.map((n) => (
-          <a class="post-card" href={`/writing/${n.slug}`}>
-            <div class="post-head">
-              <span>{modeLabel(n.data.mode)}</span>
-              <span>{fmtDate(n.data.date)}</span>
-            </div>
-            <p style="margin:0 0 6px;color:var(--ink);font-weight:500">{n.data.title}</p>
-            {n.data.hook && <p class="post-hook">{n.data.hook}</p>}
+    <ul class="notes">
+      {notes.map((n) => (
+        <li>
+          <a class="note-link" href={`/writing/${n.slug}`}>
+            <span class="note-date">{fmtDate(n.data.date)}</span>
+            <span class="note-title">{n.data.title}</span>
+            {n.data.hook && <span class="note-hook">{n.data.hook}</span>}
           </a>
-        ))}
-      </div>
-      <p style="margin-top:14px"><a href="/writing">All writing →</a></p>
-    </section>
+        </li>
+      ))}
+    </ul>
   )}
-
-  <section class="section">
-    <div class="section-label">Things that actually happened</div>
-    <p class="proof-line">
-      At Snapdeal I drove <strong>100% source-to-target message accounting</strong>, cut AWS cost about 21%,
-      redesigned WhatsApp as a bot-of-bots, and lifted SonarQube quality scores 78%.
-      Writeups on <a href="/writing/message-accounting">counting messages</a> and
-      <a href="/writing/aerospike-retry-storm">retry storms</a>. Full path on the
-      <a href="/timeline">timeline</a>.
-    </p>
-  </section>
-
-  <section class="section section-compact">
-    <div class="section-label">Also here</div>
-    <p class="elsewhere">
-      <a href="/work">Work</a> (cases)
-      <span class="path-sep">·</span>
-      <a href="/timeline">Timeline</a>
-      <span class="path-sep">·</span>
-      <a href="/now">Now</a>
-      <span class="path-sep">·</span>
-      <a href="/about">About</a>
-      <span class="path-sep">·</span>
-      <a href="https://www.linkedin.com/in/debanjanc01" target="_blank" rel="noreferrer">LinkedIn</a>
-      <span class="path-sep">·</span>
-      <a href="mailto:debanjanc01@gmail.com">Email</a>
-    </p>
-  </section>
 </BaseLayout>
 
 <style>
-  a.post-card { display: block; color: inherit; border: 0; text-decoration: none; }
-  a.post-card:hover { border-color: var(--ink-muted); }
-  .lede-soft {
-    margin-top: -8px;
-    font-size: 1.02rem;
-    color: var(--ink-muted);
-  }
-  .section-intro {
-    margin: 0 0 14px;
+  .intro {
+    font-size: 1.125rem;
+    color: var(--ink);
     max-width: 36em;
-    font-size: 0.95rem;
-    color: var(--ink-muted);
+    margin: 0 0 10px;
   }
-  .proof-line {
+  .intro-quiet {
+    color: var(--ink-muted);
     max-width: 36em;
     margin: 0;
-  }
-  .proof-line strong {
-    color: var(--ink);
-    font-weight: 600;
-  }
-  .section-compact { margin-top: 40px; }
-  .elsewhere {
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--ink-muted);
-    line-height: 1.8;
-  }
-  .elsewhere a {
-    color: var(--ink-body);
-    border: 0;
-  }
-  .elsewhere a:hover {
-    color: var(--ink);
-    border-bottom: 1px solid var(--ink);
   }
 </style>

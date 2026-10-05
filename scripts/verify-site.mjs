@@ -113,7 +113,7 @@ const text = home
 
 const h1Match = home.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
 const h1 = (h1Match?.[1] || '').replace(/<[^>]+>/g, '').trim();
-assert(h1.length > 10, 'home: missing H1');
+assert(h1.length > 8, 'home: missing H1');
 assert(
   !/apollo\.io/i.test(h1),
   'home H1 should not lead with employer name'
@@ -122,32 +122,27 @@ assert(
   !/^senior software engineer/i.test(h1),
   'home H1 should not be a job title'
 );
-// First lede should appear before employer soft bio; tension words
 assert(
-  /die after they ship|production|retries|honest|lying|outage|design/i.test(h1 + text.slice(0, 500)),
-  'home: missing concrete stake/tension near the top'
+  /agents|Claude connector/i.test(text.slice(0, 900)),
+  'home: missing who-he-is and agents near the top'
 );
-// Employer and years still present somewhere (credentials after stake)
-assert(/Apollo\.io/i.test(home), 'home: missing current employer grounding');
-assert(/8\+\s*years/i.test(home), 'home: missing 8+ years signal');
-assert(/Senior engineer|Senior Software Engineer/i.test(home), 'home: missing senior signal');
+assert(/Apollo/i.test(home), 'home: missing current employer grounding');
 
-// Multi-pillar substance without old slogans
 assert(
-  /early[- ]career|career|calm|building|human|outage|retry/i.test(home),
-  'home: missing multi-topic substance signals'
+  /human|agent|ship/i.test(home),
+  'home: missing the writing subject'
 );
 
-// X follow plain, not needy banner
 assert(/x\.com\/theybanjan|@theybanjan/i.test(home), 'home: missing X follow affordance');
 assert(!/Follow on X/i.test(home), 'home: needy Follow on X banner should not lead');
 assert(
-  /Shorter thoughts|@theybanjan/i.test(home),
+  /Short takes|brain dumps|@theybanjan|x\.com\/theybanjan/i.test(home),
   'home: missing plain follow-reason for X'
 );
+assert(/linkedin\.com\/in\/debanjanc01/i.test(home), 'home: missing LinkedIn');
 
-// Production proof
-assert(/100%|message accounting|Snapdeal/i.test(home), 'home: missing specific production proof');
+const workPage = read(path.join(dist, 'work', 'index.html'));
+assert(/100%|message accounting|Snapdeal/i.test(workPage), 'work: missing specific production proof');
 
 // Paths
 for (const href of ['/writing', '/work', '/about', '/contact', '/now', '/timeline', 'https://x.com/theybanjan']) {
@@ -223,19 +218,21 @@ assert(selectedModes.includes('human'), `selectHomeNotes must keep human; got [$
 assert(selectedModes.includes('dive'), `selectHomeNotes must keep dive; got [${selectedModes}]`);
 assert(selectedModes.includes('career'), `selectHomeNotes must keep career; got [${selectedModes}]`);
 
-const postsChunk = home.match(/Selected writing[\s\S]*?All writing/i)?.[0] ?? '';
-assert(postsChunk.length > 0, 'home: could not isolate Selected writing section');
-assert(/>\s*human\s*</i.test(postsChunk), 'home selected writing must include human-mode card');
-const humanSlug = selected.find((e) => e.data.mode === 'human')?.slug;
-assert(postsChunk.includes(`/writing/${humanSlug}`), `home must link human note ${humanSlug}`);
+for (const mode of ['human', 'dive', 'career']) {
+  const slug = selected.find((e) => e.data.mode === mode)?.slug;
+  assert(slug && home.includes(`/writing/${slug}`), `home must link ${mode} note ${slug}`);
+}
 
-// External listicles demoted
 assert(
-  /Elsewhere \(external\)|not the main story|not the point/i.test(writingPage),
-  'writing page should demote external listicles'
+  /Other sites/i.test(writingPage),
+  'writing page should keep external pieces in their own list'
+);
+assert(
+  !/post-card|deep dive|philosophy/i.test(writingPage),
+  'writing page should not use mode chips or cards'
 );
 
-assert(/8\+\s*years|Eight-plus years|8\+ years/i.test(about), 'about: missing years signal');
+assert(/eight(-plus)?\s+years|8\+\s*years/i.test(about), 'about: missing years signal');
 
 // --- Timeline bodies: spoken voice, not LinkedIn résumé soup ---
 const timelineFiles = walkFiles(timelineDir, '.md');
